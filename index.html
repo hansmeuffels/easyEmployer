@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>easyEmployer - Create Employer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <h1>🏢 easyEmployer</h1>
+            <p class="subtitle">Easily create an employer with an employment</p>
+            
+            <form id="employerForm">
+                <div class="form-group">
+                    <label for="accessToken">Access Token</label>
+                    <input 
+                        type="text" 
+                        id="accessToken" 
+                        name="accessToken" 
+                        placeholder="Enter your access token"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="employerName">Employer Name</label>
+                    <input 
+                        type="text" 
+                        id="employerName" 
+                        name="employerName" 
+                        placeholder="Company name"
+                        required
+                    >
+                    <button type="button" class="regenerate-btn" onclick="regenerateEmployerName()">🔄</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeName">Employee Name</label>
+                    <input 
+                        type="text" 
+                        id="employeeName" 
+                        name="employeeName" 
+                        placeholder="Employee name"
+                        required
+                    >
+                    <button type="button" class="regenerate-btn" onclick="regenerateEmployeeName()">🔄</button>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Employer</button>
+            </form>
+
+            <div id="result" class="result hidden"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
