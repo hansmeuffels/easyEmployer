@@ -51,14 +51,24 @@ function getRandomItem(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-// Generate random employer name
+// Generate random employer name (different from current)
 function generateEmployerName() {
-    return getRandomItem(funnyEmployerNames);
+    const currentName = document.getElementById('employerName').value;
+    let newName;
+    do {
+        newName = getRandomItem(funnyEmployerNames);
+    } while (newName === currentName && funnyEmployerNames.length > 1);
+    return newName;
 }
 
-// Generate random employee name
+// Generate random employee name (different from current)
 function generateEmployeeName() {
-    return getRandomItem(funnyEmployeeNames);
+    const currentName = document.getElementById('employeeName').value;
+    let newName;
+    do {
+        newName = getRandomItem(funnyEmployeeNames);
+    } while (newName === currentName && funnyEmployeeNames.length > 1);
+    return newName;
 }
 
 // Regenerate employer name
@@ -87,17 +97,13 @@ function handleSubmit(event) {
     
     // Display result (using safe DOM methods to prevent XSS)
     const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = ''; // Clear previous content
+    resultDiv.textContent = ''; // Clear previous content safely
     
     const heading = document.createElement('h3');
     heading.textContent = '✅ Employer Created Successfully!';
     
     const tokenPara = document.createElement('p');
-    const tokenStrong = document.createElement('strong');
-    tokenStrong.textContent = 'Access Token: ';
-    tokenPara.appendChild(tokenStrong);
-    const tokenText = document.createTextNode(accessToken.substring(0, 10) + (accessToken.length > 10 ? '...' : ''));
-    tokenPara.appendChild(tokenText);
+    tokenPara.textContent = 'Access token has been securely received.';
     
     const employerPara = document.createElement('p');
     const employerStrong = document.createElement('strong');
