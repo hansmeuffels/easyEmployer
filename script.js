@@ -85,14 +85,38 @@ function handleSubmit(event) {
     const employerName = document.getElementById('employerName').value;
     const employeeName = document.getElementById('employeeName').value;
     
-    // Display result
+    // Display result (using safe DOM methods to prevent XSS)
     const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = `
-        <h3>✅ Employer Created Successfully!</h3>
-        <p><strong>Access Token:</strong> ${accessToken.substring(0, 10)}${accessToken.length > 10 ? '...' : ''}</p>
-        <p><strong>Employer Name:</strong> ${employerName}</p>
-        <p><strong>Employee Name:</strong> ${employeeName}</p>
-    `;
+    resultDiv.innerHTML = ''; // Clear previous content
+    
+    const heading = document.createElement('h3');
+    heading.textContent = '✅ Employer Created Successfully!';
+    
+    const tokenPara = document.createElement('p');
+    const tokenStrong = document.createElement('strong');
+    tokenStrong.textContent = 'Access Token: ';
+    tokenPara.appendChild(tokenStrong);
+    const tokenText = document.createTextNode(accessToken.substring(0, 10) + (accessToken.length > 10 ? '...' : ''));
+    tokenPara.appendChild(tokenText);
+    
+    const employerPara = document.createElement('p');
+    const employerStrong = document.createElement('strong');
+    employerStrong.textContent = 'Employer Name: ';
+    employerPara.appendChild(employerStrong);
+    const employerText = document.createTextNode(employerName);
+    employerPara.appendChild(employerText);
+    
+    const employeePara = document.createElement('p');
+    const employeeStrong = document.createElement('strong');
+    employeeStrong.textContent = 'Employee Name: ';
+    employeePara.appendChild(employeeStrong);
+    const employeeText = document.createTextNode(employeeName);
+    employeePara.appendChild(employeeText);
+    
+    resultDiv.appendChild(heading);
+    resultDiv.appendChild(tokenPara);
+    resultDiv.appendChild(employerPara);
+    resultDiv.appendChild(employeePara);
     resultDiv.classList.remove('hidden');
     
     // Scroll to result
@@ -102,5 +126,9 @@ function handleSubmit(event) {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeForm();
+    
+    // Add event listeners
     document.getElementById('employerForm').addEventListener('submit', handleSubmit);
+    document.getElementById('regenerateEmployer').addEventListener('click', regenerateEmployerName);
+    document.getElementById('regenerateEmployee').addEventListener('click', regenerateEmployeeName);
 });
