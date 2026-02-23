@@ -1,15 +1,4 @@
-// Strip JSON wrapper, quotes, key names, commas from pasted tokens
-function cleanToken(raw) {
-  if (!raw) return raw;
-  let t = raw.trim();
-  // Remove surrounding braces (if user pasted full JSON object)
-  t = t.replace(/^\{/, '').replace(/\}$/, '').trim();
-  // Remove key like "access_token" : or 'access_token' :
-  t = t.replace(/^["']?access_token["']?\s*:\s*/i, '').trim();
-  // Remove surrounding quotes and trailing commas
-  t = t.replace(/^["']/, '').replace(/["'],?\s*$/, '').trim();
-  return t;
-}
+import { cleanToken } from './_shared.js';
 
 export default async function handler(req, res) {
   // Only allow POST

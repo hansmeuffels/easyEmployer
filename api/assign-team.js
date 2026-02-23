@@ -1,11 +1,4 @@
-function cleanToken(raw) {
-  if (!raw) return raw;
-  let t = raw.trim();
-  t = t.replace(/^\{/, '').replace(/\}$/, '').trim();
-  t = t.replace(/^["']?access_token["']?\s*:\s*/i, '').trim();
-  t = t.replace(/^["']/, '').replace(/["'],?\s*$/, '').trim();
-  return t;
-}
+import { cleanToken } from './_shared.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'PATCH') {
