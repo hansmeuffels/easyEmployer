@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { accessToken: rawToken, employerId, modules } = req.body;
+  const { accessToken: rawToken, employerId, payload } = req.body;
   const accessToken = cleanToken(rawToken);
 
   if (!accessToken) {
@@ -16,20 +16,20 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Employer ID is vereist' });
   }
 
-  if (!modules || !Array.isArray(modules) || modules.length === 0) {
-    return res.status(400).json({ error: 'Minstens één module is vereist' });
+  if (!payload) {
+    return res.status(400).json({ error: 'Payload is vereist' });
   }
 
-  const apiUrl = `https://api.loket-ontw.nl/v2/providers/employers/${employerId}/modules`;
+  const apiUrl = `https://api.loket-ontw.nl/v2/providers/employers/${employerId}/employee`;
 
   try {
     const response = await fetch(apiUrl, {
-      method: 'PATCH',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(modules),
+      body: JSON.stringify(payload),
     });
 
     const contentType = response.headers.get('content-type') || '';
@@ -43,6 +43,7 @@ export default async function handler(req, res) {
     return res.status(response.status).json({
       status: response.status,
       data,
+      location: response.headers.get('location') || null,
     });
   } catch (error) {
     console.error('API call failed:', error);

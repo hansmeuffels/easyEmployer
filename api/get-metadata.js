@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { accessToken: rawToken, employerId, modules } = req.body;
+  const { accessToken: rawToken, employerId } = req.body;
   const accessToken = cleanToken(rawToken);
 
   if (!accessToken) {
@@ -16,20 +16,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Employer ID is vereist' });
   }
 
-  if (!modules || !Array.isArray(modules) || modules.length === 0) {
-    return res.status(400).json({ error: 'Minstens één module is vereist' });
-  }
-
-  const apiUrl = `https://api.loket-ontw.nl/v2/providers/employers/${employerId}/modules`;
+  const apiUrl = `https://api.loket-ontw.nl/v2/providers/employers/${employerId}/conceptemployees/metadata`;
 
   try {
     const response = await fetch(apiUrl, {
-      method: 'PATCH',
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
+        Accept: 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(modules),
     });
 
     const contentType = response.headers.get('content-type') || '';
@@ -45,9 +40,9 @@ export default async function handler(req, res) {
       data,
     });
   } catch (error) {
-    console.error('API call failed:', error);
+    console.error('Get metadata failed:', error);
     return res.status(500).json({
-      error: 'Fout bij het aanroepen van de API',
+      error: 'Fout bij het ophalen van metadata',
       details: error.message,
     });
   }

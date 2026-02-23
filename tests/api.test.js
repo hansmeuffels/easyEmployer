@@ -205,42 +205,42 @@ describe('api/assign-team', () => {
     handler = mod.default;
   });
 
-  it('rejects non-PATCH methods', async () => {
+  it('rejects non-POST methods', async () => {
     const res = mockRes();
-    await handler(mockReq({ method: 'POST' }), res);
+    await handler(mockReq({ method: 'PATCH' }), res);
     expect(res._status).toBe(405);
   });
 
   it('returns 400 without accessToken', async () => {
     const res = mockRes();
-    await handler(mockReq({ method: 'PATCH', body: { employerId: 'e1', teamIds: ['t1'], providerId: 'p1' } }), res);
+    await handler(mockReq({ method: 'POST', body: { employerId: 'e1', teamIds: ['t1'], providerId: 'p1' } }), res);
     expect(res._status).toBe(400);
   });
 
   it('returns 400 without employerId', async () => {
     const res = mockRes();
-    await handler(mockReq({ method: 'PATCH', body: { accessToken: 'tok', teamIds: ['t1'], providerId: 'p1' } }), res);
+    await handler(mockReq({ method: 'POST', body: { accessToken: 'tok', teamIds: ['t1'], providerId: 'p1' } }), res);
     expect(res._status).toBe(400);
     expect(res._json.error).toMatch(/employer/i);
   });
 
   it('returns 400 without providerId', async () => {
     const res = mockRes();
-    await handler(mockReq({ method: 'PATCH', body: { accessToken: 'tok', employerId: 'e1', teamIds: ['t1'] } }), res);
+    await handler(mockReq({ method: 'POST', body: { accessToken: 'tok', employerId: 'e1', teamIds: ['t1'] } }), res);
     expect(res._status).toBe(400);
     expect(res._json.error).toMatch(/provider/i);
   });
 
   it('returns 400 without teamIds', async () => {
     const res = mockRes();
-    await handler(mockReq({ method: 'PATCH', body: { accessToken: 'tok', employerId: 'e1', providerId: 'p1' } }), res);
+    await handler(mockReq({ method: 'POST', body: { accessToken: 'tok', employerId: 'e1', providerId: 'p1' } }), res);
     expect(res._status).toBe(400);
     expect(res._json.error).toMatch(/team/i);
   });
 
   it('returns 400 with empty teamIds array', async () => {
     const res = mockRes();
-    await handler(mockReq({ method: 'PATCH', body: { accessToken: 'tok', employerId: 'e1', providerId: 'p1', teamIds: [] } }), res);
+    await handler(mockReq({ method: 'POST', body: { accessToken: 'tok', employerId: 'e1', providerId: 'p1', teamIds: [] } }), res);
     expect(res._status).toBe(400);
   });
 
@@ -250,7 +250,7 @@ describe('api/assign-team', () => {
     ));
 
     const res = mockRes();
-    await handler(mockReq({ method: 'PATCH', body: { accessToken: 'tok', employerId: 'emp-1', providerId: 'prov-1', teamIds: ['t1', 't2'] } }), res);
+    await handler(mockReq({ method: 'POST', body: { accessToken: 'tok', employerId: 'emp-1', providerId: 'prov-1', teamIds: ['t1', 't2'] } }), res);
 
     expect(fetch.mock.calls[0][0]).toBe('https://api.loket-ontw.nl/v2/providers/prov-1/employers/emp-1/authorizationGroups');
     expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual(['t1', 't2']);
@@ -270,29 +270,29 @@ describe('api/assign-modules', () => {
     handler = mod.default;
   });
 
-  it('rejects non-PATCH methods', async () => {
+  it('rejects non-POST methods', async () => {
     const res = mockRes();
-    await handler(mockReq({ method: 'POST' }), res);
+    await handler(mockReq({ method: 'PATCH' }), res);
     expect(res._status).toBe(405);
   });
 
   it('returns 400 without modules', async () => {
     const res = mockRes();
-    await handler(mockReq({ method: 'PATCH', body: { accessToken: 'tok', employerId: 'e1', providerId: 'p1' } }), res);
+    await handler(mockReq({ method: 'POST', body: { accessToken: 'tok', employerId: 'e1' } }), res);
     expect(res._status).toBe(400);
     expect(res._json.error).toMatch(/module/i);
   });
 
-  it('constructs correct URL and sends modules', async () => {
-    const modules = [{ id: 'm1', isActive: true }];
+  it('constructs correct URL without providerId and sends modules', async () => {
+    const modules = [{ id: 'm1', action: 'enable' }];
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(
       mockFetchResponse({ status: 200, json: {}, headers: { 'content-type': 'application/json' } })
     ));
 
     const res = mockRes();
-    await handler(mockReq({ method: 'PATCH', body: { accessToken: 'tok', employerId: 'emp-1', providerId: 'prov-1', modules } }), res);
+    await handler(mockReq({ method: 'POST', body: { accessToken: 'tok', employerId: 'emp-1', modules } }), res);
 
-    expect(fetch.mock.calls[0][0]).toBe('https://api.loket-ontw.nl/v2/providers/prov-1/employers/emp-1/modules');
+    expect(fetch.mock.calls[0][0]).toBe('https://api.loket-ontw.nl/v2/providers/employers/emp-1/modules');
     expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual(modules);
   });
 });

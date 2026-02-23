@@ -11,10 +11,10 @@
   <style>
     :root {
       --loket-navy: #0f0a3c;
-      --loket-blue: #1d4ed8;
-      --loket-blue-hover: #2563eb;
-      --loket-blue-disabled: #93b4f5;
-      --loket-blue-bg: #eff4ff;
+      --loket-blue: #161C6A;
+      --loket-blue-hover: #1e2580;
+      --loket-blue-disabled: #8b8fc4;
+      --loket-blue-bg: #ecedf8;
       --loket-teal: #00c9a7;
       --loket-teal-dark: #00a98b;
       --loket-white: #ffffff;
@@ -195,7 +195,7 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin: 2.5rem 0 1rem;
+      margin: 0 0 0.75rem;
     }
     .step-header:first-child {
       margin-top: 0;
@@ -224,8 +224,8 @@
       background: var(--loket-white);
       border-radius: var(--loket-radius-lg);
       box-shadow: 0 1px 3px rgba(15,10,60,0.04), 0 4px 16px rgba(15,10,60,0.06);
-      padding: 1.75rem 2rem;
-      margin-bottom: 1rem;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
     }
 
     /* Labels & inputs */
@@ -238,10 +238,10 @@
     }
     input, select, textarea {
       width: 100%;
-      padding: 0.65rem 0.85rem;
+      padding: 0.5rem 0.75rem;
       border: 1.5px solid var(--loket-gray-200);
       border-radius: var(--loket-radius);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: border-color 0.2s, box-shadow 0.2s;
       font-family: inherit;
       color: var(--loket-gray-800);
@@ -256,10 +256,10 @@
       color: var(--loket-gray-400);
     }
     .field-group {
-      margin-bottom: 1rem;
+      margin-bottom: 0.65rem;
     }
     .primary-fields .field-group {
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.75rem;
     }
 
     /* Toggle button */
@@ -292,8 +292,8 @@
     /* Extra fields */
     .extra-fields {
       display: none;
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
       border-top: 1.5px solid var(--loket-gray-100);
     }
     .extra-fields.visible {
@@ -305,8 +305,8 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--loket-gray-400);
-      margin-bottom: 0.75rem;
-      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      margin-top: 1rem;
     }
     .section-title:first-child {
       margin-top: 0;
@@ -317,13 +317,15 @@
       color: var(--loket-white);
       border: none;
       border-radius: var(--loket-radius);
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
+      padding: 0.6rem 1.5rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s, transform 0.1s;
-      width: 100%;
+      width: auto;
       font-family: inherit;
+      display: block;
+      margin-left: auto;
     }
     .action-btn:active { transform: scale(0.99); }
     .action-btn:disabled { cursor: not-allowed; transform: none; }
@@ -334,10 +336,10 @@
 
     /* Result boxes */
     .result {
-      margin-top: 1rem;
-      padding: 1rem 1.25rem;
+      margin-top: 0.75rem;
+      padding: 0.75rem 1rem;
       border-radius: var(--loket-radius);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       display: none;
       word-break: break-word;
     }
@@ -679,23 +681,7 @@
         <div class="primary-fields">
           <div class="field-group">
             <label for="admName">Naam administratie *</label>
-            <input type="text" id="admName" placeholder="Bijv. ApiTest1" required />
-          </div>
-          <div class="field-group">
-            <label for="admDescription">Omschrijving</label>
-            <input type="text" id="admDescription" placeholder="Bijv. apiTestAdm(#)" />
-          </div>
-          <div class="field-group">
-            <label for="admPayrollYear">Loonjaar *</label>
-            <input type="number" id="admPayrollYear" value="2026" />
-          </div>
-          <div class="field-group">
-            <label for="admPayrollTaxNumber">Loonheffingennummer *</label>
-            <input type="text" id="admPayrollTaxNumber" value="143793457L01" />
-          </div>
-          <div class="field-group">
-            <label for="admIban">IBAN</label>
-            <input type="text" id="admIban" value="NL18ABNA7066752391" />
+            <input type="text" id="admName" placeholder="Wordt automatisch gevuld" required />
           </div>
         </div>
 
@@ -704,6 +690,23 @@
         </button>
 
         <div class="extra-fields" id="admExtraFields">
+          <div class="field-group">
+            <label for="admDescription">Omschrijving</label>
+            <input type="text" id="admDescription" placeholder="Wordt automatisch gevuld met werkgevernaam" />
+          </div>
+          <div class="field-group">
+            <label for="admPayrollYear">Loonjaar *</label>
+            <input type="number" id="admPayrollYear" value="2026" />
+          </div>
+          <div class="field-group">
+            <label for="admPayrollTaxNumber">Loonheffingennummer *</label>
+            <input type="text" id="admPayrollTaxNumber" placeholder="Wordt automatisch gegenereerd" />
+          </div>
+          <div class="field-group">
+            <label for="admIban">IBAN</label>
+            <input type="text" id="admIban" placeholder="Wordt automatisch gegenereerd" />
+          </div>
+
           <div class="section-title">Loonmodel</div>
           <div class="field-group">
             <label for="admWageModelId">Wage Model ID</label>
@@ -901,6 +904,178 @@
         <div class="result" id="admResult"></div>
       </div>
 
+      <!-- Step 5: Create employee -->
+      <div class="card">
+        <div class="step-header" style="margin-top:0;">
+          <span class="step-number blue">5</span>
+          <span class="step-title">Werknemer toevoegen</span>
+        </div>
+
+        <div class="primary-fields">
+          <div class="field-group">
+            <label for="empLastName">Achternaam *</label>
+            <input type="text" id="empLastName" placeholder="Wordt automatisch gevuld met werkgevernaam" required />
+          </div>
+        </div>
+
+        <button type="button" class="toggle-btn" id="toggleEmpBtn" onclick="toggleEmpExtra()">
+          <span class="arrow">&#9660;</span> Toon alle velden
+        </button>
+
+        <div class="extra-fields" id="empExtraFields">
+          <div class="section-title">Persoonsgegevens</div>
+          <div class="field-group">
+            <label for="empInitials">Voorletters</label>
+            <input type="text" id="empInitials" value="A" />
+          </div>
+          <div class="field-group">
+            <label for="empFormattedName">Formatted name</label>
+            <input type="text" id="empFormattedName" placeholder="Wordt automatisch gevuld" />
+          </div>
+          <div class="field-group">
+            <label for="empDateOfBirth">Geboortedatum</label>
+            <input type="date" id="empDateOfBirth" value="2000-01-01" />
+          </div>
+          <div class="field-group">
+            <label for="empDateOfDeath">Datum overlijden</label>
+            <input type="date" id="empDateOfDeath" value="2026-02-23" />
+          </div>
+          <div class="field-group">
+            <label for="empHowToFormat">Naamweergave (key)</label>
+            <input type="number" id="empHowToFormat" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empNationalityKey">Nationaliteit (key)</label>
+            <input type="number" id="empNationalityKey" value="143" />
+          </div>
+          <div class="field-group">
+            <label for="empGenderKey">Geslacht (key)</label>
+            <input type="number" id="empGenderKey" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empCivilStatusKey">Burgerlijke staat (key)</label>
+            <input type="number" id="empCivilStatusKey" value="1" />
+          </div>
+
+          <div class="section-title">Adres</div>
+          <div class="field-group">
+            <label for="empStreet">Straat</label>
+            <input type="text" id="empStreet" value="Reitseplein" />
+          </div>
+          <div class="field-group">
+            <label for="empHouseNumber">Huisnummer</label>
+            <input type="number" id="empHouseNumber" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empPostalCode">Postcode</label>
+            <input type="text" id="empPostalCode" value="5037 AA" />
+          </div>
+          <div class="field-group">
+            <label for="empCity">Plaats</label>
+            <input type="text" id="empCity" value="Tilburg" />
+          </div>
+
+          <div class="section-title">Werkgeversgegevens</div>
+          <div class="field-group">
+            <label for="empNumber">Personeelsnummer</label>
+            <input type="number" id="empNumber" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empIban">IBAN</label>
+            <input type="text" id="empIban" placeholder="Wordt automatisch gegenereerd" />
+          </div>
+          <div class="field-group">
+            <label for="empBsn">BSN</label>
+            <input type="text" id="empBsn" placeholder="Wordt automatisch gegenereerd" />
+          </div>
+
+          <div class="section-title">Dienstverband</div>
+          <div class="field-group">
+            <label for="empStartDate">Startdatum</label>
+            <input type="date" id="empStartDate" value="2026-01-01" />
+          </div>
+          <div class="field-group">
+            <label for="empPayrollAdmId">Salarisadministratie ID</label>
+            <input type="text" id="empPayrollAdmId" placeholder="Wordt opgehaald via metadata" />
+          </div>
+          <div class="field-group">
+            <label for="empIncomeRelNr">Inkomstenverhoudingnummer</label>
+            <input type="number" id="empIncomeRelNr" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empDurationType">Duur dienstverband (key)</label>
+            <input type="number" id="empDurationType" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empStartDateIndef">Startdatum onbepaalde tijd</label>
+            <input type="date" id="empStartDateIndef" value="2026-01-01" />
+          </div>
+          <div class="field-group">
+            <label for="empContractType">Contracttype (key)</label>
+            <input type="number" id="empContractType" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empTypeOfEmployee">Type werknemer (key)</label>
+            <input type="number" id="empTypeOfEmployee" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empExemptionKey">Uitzondering verzekeringsplicht (key)</label>
+            <input type="number" id="empExemptionKey" value="0" />
+          </div>
+
+          <div class="section-title">Organisatie</div>
+          <div class="field-group">
+            <label for="empFunctionKey">Functie (key)</label>
+            <input type="text" id="empFunctionKey" placeholder="Wordt opgehaald via metadata" />
+          </div>
+          <div class="field-group">
+            <label for="empDepartmentKey">Afdeling (key)</label>
+            <input type="text" id="empDepartmentKey" placeholder="Wordt opgehaald via metadata" />
+          </div>
+          <div class="field-group">
+            <label for="empDistUnitKey">Verdeeleenheid (key)</label>
+            <input type="text" id="empDistUnitKey" placeholder="Wordt opgehaald via metadata" />
+          </div>
+
+          <div class="section-title">Werktijden</div>
+          <div class="field-group">
+            <label for="empShiftNumber">Ploegnummer</label>
+            <input type="number" id="empShiftNumber" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empFullTimeHours">Voltijdsuren per week</label>
+            <input type="number" id="empFullTimeHours" value="40" />
+          </div>
+          <div class="field-group">
+            <label for="empBonusPercentage">Toeslag %</label>
+            <input type="number" id="empBonusPercentage" value="0" />
+          </div>
+
+          <div class="section-title">Loon</div>
+          <div class="field-group">
+            <label for="empGrossWage">Bruto loon</label>
+            <input type="number" id="empGrossWage" value="3000" />
+          </div>
+          <div class="field-group">
+            <label for="empGrossWageType">Bruto loontype (key)</label>
+            <input type="number" id="empGrossWageType" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="empAnnualSalary">Jaarloon</label>
+            <input type="number" id="empAnnualSalary" value="50000" />
+          </div>
+          <div class="field-group">
+            <label for="empHealthCareKey">ZVW type (key)</label>
+            <input type="number" id="empHealthCareKey" value="1" />
+          </div>
+        </div>
+
+        <button class="action-btn blue" id="empBtn" onclick="createEmployee()" disabled>
+          Werknemer toevoegen
+        </button>
+        <div class="result" id="empResult"></div>
+      </div>
+
     </div>
   </div>
 
@@ -908,69 +1083,14 @@
     Loket &middot; Reitseplein 1, 5037 AA Tilburg &middot; <a href="https://loket.nl" target="_blank">loket.nl</a>
   </div>
 
+  <script src="config.js"></script>
   <script>
-    // Module definitions
-    const MODULES = [
-      { id: '6e385e0f-9bf5-4512-bbfd-f1a956159516', action: 'enable' },
-      { id: 'd6a4e1a9-2541-4d9b-b801-cfffd703007a', action: 'enable' },
-      { id: 'd65b14c5-6ee6-4231-a68b-f5d923fa6aa9', action: 'enable' },
-      { id: 'c2997c59-65f4-4ed9-bb36-d7b1bd2581c4', action: 'enable' },
-      { id: 'e55e2e90-a1e0-4bf0-ba57-a2c9161afeee', action: 'enable' },
-      { id: '63da9f4b-d777-41c2-9cf7-6e86c60d344d', action: 'enable' },
-      { id: 'cbafd290-bde6-4c0d-96c8-f3c14b884bab', action: 'enable' },
-      { id: 'e234106f-2687-4776-8287-5dfbb51758f4', action: 'enable' },
-      { id: '6bb8fa8a-3ee8-4609-8267-ea102240fb75', action: 'enable' },
-      { id: '08268b7d-d632-4895-8565-af657ac56039', action: 'enable' },
-      { id: '45f364a1-c9ee-4f40-88a9-74c76695a757', action: 'enable' },
-      { id: '11be5720-6e07-42d2-9074-19416a51fd5f', action: 'enable' },
-      { id: 'df25d366-5269-4b70-b6f2-5e021eb3bbbc', action: 'enable' },
-      { id: '2bf3ee3e-a377-434b-ac6a-c555966389ac', action: 'enable' },
-      { id: 'ae0e876b-8eb0-4ffd-a09f-82d6f76b331b', action: 'enable' },
-      { id: '37be72b5-ef1c-4f06-8a04-fcd20b175714', action: 'enable' },
-      { id: '9dd99930-1a19-421c-8d96-fdb4a6fc2359', action: 'enable' },
-      { id: '1b067c44-0fb0-4b60-9d2a-86d72d17912f', action: 'enable' },
-      { id: '5fca8828-5935-46de-a3cb-2e8832b0a80b', action: 'enable' },
-      { id: '32cb5059-ef11-4e45-a6bd-d2c8ff995a98', action: 'enable' },
-      { id: '8aa4d415-f0c3-4a2e-be9a-23e87459e0a3', action: 'enable' },
-      { id: '5989e393-fc91-4a77-9deb-51d0626ac560', action: 'enable' },
-      { id: '7eb1622d-29c3-488d-aa5b-5eb071728c81', action: 'enable' },
-      { id: '07b6f19b-5118-4b46-a29c-2e6fe4ecdae8', action: 'enable' },
-      { id: 'fd265beb-056d-4c80-8364-80b41194615d', action: 'enable' },
-      { id: 'cd0b2cb3-1353-49b7-a140-107b923c27af', action: 'enable' },
-      { id: '9b0440f9-d83f-4d8e-b52f-d8fcf1bfde0b', action: 'enable' },
-      { id: '60fa21df-c390-4470-b835-36d84735f9b2', action: 'enable' },
-      { id: 'dcb0a89e-ac96-454b-bb01-a61abd2956dc', action: 'enable' },
-      { id: '0c138c1e-c8b1-437e-ba29-0454413c6767', action: 'enable' },
-      { id: '790aa6c7-7da1-448b-9927-a9f8ea333bd6', action: 'enable' },
-      { id: '0ac70bca-1656-449d-9dd7-698177cd6194', action: 'enable' },
-      { id: '066eef86-6a52-4b01-870a-f2b620222c3c', action: 'enable' },
-      { id: 'e3cd6964-aba0-459e-9ad7-a6d559634141', action: 'enable' },
-      { id: '9b58cc4e-0a34-44ad-be25-38c320563014', action: 'enable' },
-      { id: 'f9d9483a-8138-403e-b483-5f10d02e05b4', action: 'enable' },
-      { id: '4890248c-721e-4b26-b88d-0e5a04dcef93', action: 'enable' },
-      { id: 'ba123031-26e9-4c34-b5a6-7e5746395423', action: 'enable' },
-      { id: 'aecc7799-2b83-47f4-950e-6645762274c4', action: 'enable' },
-      { id: '36b5b0b4-8f37-494f-970d-3b6dec2b896b', action: 'enable' },
-      { id: 'f6bbfe88-701d-4d99-877d-8ee780ad2296', action: 'enable' },
-      { id: 'e1a57976-3987-4c1d-a899-131727545174', action: 'enable' },
-      { id: 'ecb0693b-9525-4712-afda-68d8e7fa8a52', action: 'enable' },
-      { id: '3de81266-043e-4336-bd97-f98e5b824464', action: 'enable' },
-      { id: '4ff6ce00-8185-4336-86af-22a8f9839fe0', action: 'enable' },
-      { id: '5b122343-43dc-422c-b8d9-655837d02c1e', action: 'enable' },
-      { id: '4e7362cb-16a7-48eb-8496-61742efaaa2f', action: 'enable' },
-      { id: 'd9cd37b9-5f0e-4349-8197-50b70d831dbd', action: 'enable' },
-      { id: '23ca49ee-deff-4c79-9d53-f19357c24181', action: 'enable' },
-      { id: '12522f18-f8d0-46ee-9de5-c850034bee9c', action: 'enable' },
-      { id: 'e7b78018-316d-4725-8610-112be09c8f7b', action: 'enable' },
-      { id: '21ef0573-0334-430c-a4cb-e088353c3687', action: 'enable' },
-    ];
-
     // Render module list
     (function renderModules() {
       const list = document.getElementById('moduleList');
       MODULES.forEach(m => {
         const li = document.createElement('li');
-        li.textContent = m.id.substring(0, 8) + '…';
+        li.textContent = m.description || m.id.substring(0, 8) + '…';
         li.title = m.id;
         list.appendChild(li);
       });
@@ -978,6 +1098,12 @@
     })();
 
     // Token status indicator — also reset buttons when token changes
+    // Generate test numbers on page load
+    document.getElementById('admPayrollTaxNumber').value = generateLoonheffingennummer();
+    document.getElementById('admIban').value = generateIBAN();
+    document.getElementById('empIban').value = generateIBAN();
+    document.getElementById('empBsn').value = generateBSN();
+
     document.getElementById('accessToken').addEventListener('input', function() {
       const dot = document.getElementById('tokenDot');
       const label = document.getElementById('tokenLabel');
@@ -995,7 +1121,7 @@
     });
 
     function setButtonsEnabled(enabled) {
-      ['submitBtn', 'teamBtn', 'modulesBtn', 'admBtn'].forEach(id => {
+      ['submitBtn', 'teamBtn', 'modulesBtn', 'admBtn', 'empBtn'].forEach(id => {
         document.getElementById(id).disabled = !enabled;
       });
     }
@@ -1148,6 +1274,19 @@
       return v === '' ? null : v;
     }
 
+    function extractWarnings(data) {
+      const msgs = (data && data.messages) || (data && data.data && data.data.messages) || [];
+      return msgs.filter(m => m.type === 'warning' || m.type === 'Warning');
+    }
+
+    function renderWarnings(warnings) {
+      if (!warnings.length) return '';
+      return '<div style="margin-top:0.5rem;padding:0.5rem 0.75rem;background:#fffbeb;border:1.5px solid #fbbf24;border-radius:8px;color:#92400e;font-size:0.85rem;">' +
+        '<strong>&#9888; Waarschuwingen:</strong><ul style="margin:0.25rem 0 0 1rem;">' +
+        warnings.map(w => '<li>' + (w.description || w.message || JSON.stringify(w)) + '</li>').join('') +
+        '</ul></div>';
+    }
+
     function buildPayload() {
       return {
         companyName: val('companyName'),
@@ -1236,17 +1375,26 @@
         const data = await res.json();
 
         if (res.ok && data.status >= 200 && data.status < 300) {
-          createdEmployerId = (data.data && data.data.id) ? data.data.id : null;
-
+          createdEmployerId = null;
+          // Extract ID from content.id, then id, then Location header
+          if (data.data && data.data.content && data.data.content.id) {
+            createdEmployerId = data.data.content.id;
+          }
+          if (!createdEmployerId && data.data && data.data.id) {
+            createdEmployerId = data.data.id;
+          }
           if (!createdEmployerId && data.location) {
             const parts = data.location.split('/');
             createdEmployerId = parts[parts.length - 1] || null;
           }
 
+          const warnings = extractWarnings(data);
+
           resultEl.className = 'result success';
           resultEl.innerHTML =
             '<strong>&#10003; Werkgever succesvol aangemaakt!</strong>' +
             (createdEmployerId ? '<br>Employer ID: <code style="user-select:all">' + createdEmployerId + '</code>' : '') +
+            renderWarnings(warnings) +
             '<pre>' + JSON.stringify(data.data, null, 2) + '</pre>';
 
           btn.disabled = true;
@@ -1263,6 +1411,7 @@
           resultEl.className = 'result error';
           resultEl.innerHTML =
             '<strong>&#10007; Fout (HTTP ' + (data.status || res.status) + ')</strong>' +
+            renderWarnings(extractWarnings(data)) +
             '<pre>' + JSON.stringify(data.data || data.error || data, null, 2) + '</pre>';
           btn.disabled = false;
           btn.innerHTML = 'Werkgever aanmaken';
@@ -1307,7 +1456,7 @@
 
       try {
         const res = await fetch('/api/assign-team', {
-          method: 'PATCH',
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             accessToken,
@@ -1368,13 +1517,12 @@
 
       try {
         const res = await fetch('/api/assign-modules', {
-          method: 'PATCH',
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             accessToken,
             employerId: employerId,
-            providerId: val('providerId'),
-            modules: MODULES,
+            modules: MODULES.map(({ id, action }) => ({ id, action })),
           }),
         });
 
@@ -1388,12 +1536,27 @@
           modulesBtn.disabled = true;
           modulesBtn.innerHTML = '&#10003; Producten geactiveerd';
         } else {
-          modulesResultEl.className = 'result error';
-          modulesResultEl.innerHTML =
-            '<strong>&#10007; Fout (HTTP ' + (data.status || res.status) + ')</strong>' +
-            '<pre>' + JSON.stringify(data.data || data.error || data, null, 2) + '</pre>';
-          modulesBtn.disabled = false;
-          modulesBtn.innerHTML = 'Producten activeren';
+          // Check for "Product has already been linked" (code 7524)
+          const errData = data.data || {};
+          const isAlreadyLinked = errData.code === 7524 ||
+            (Array.isArray(errData) && errData.some(e => e.code === 7524)) ||
+            (typeof errData === 'object' && errData.description && errData.description.includes('already been linked'));
+
+          if (isAlreadyLinked) {
+            modulesResultEl.className = 'result success';
+            modulesResultEl.innerHTML =
+              '<strong>&#10003; Producten zijn al gekoppeld aan deze werkgever.</strong>' +
+              '<pre>' + JSON.stringify(errData, null, 2) + '</pre>';
+            modulesBtn.disabled = true;
+            modulesBtn.innerHTML = '&#10003; Producten al gekoppeld';
+          } else {
+            modulesResultEl.className = 'result error';
+            modulesResultEl.innerHTML =
+              '<strong>&#10007; Fout (HTTP ' + (data.status || res.status) + ')</strong>' +
+              '<pre>' + JSON.stringify(data.data || data.error || data, null, 2) + '</pre>';
+            modulesBtn.disabled = false;
+            modulesBtn.innerHTML = 'Producten activeren';
+          }
         }
       } catch (err) {
         modulesResultEl.className = 'result error';
@@ -1424,7 +1587,7 @@
         groupCode: val('admGroupCode') || null,
         name: val('admName'),
         shortName: val('admShortName') || null,
-        description: val('admDescription') || null,
+        description: val('admDescription') || val('admName') || '',
         isInternalPayrollAdministration: document.getElementById('admIsInternal').checked,
         withholdingParty: null,
         groupClassification: null,
@@ -1436,17 +1599,21 @@
         },
         address: {
           street: val('admStreet') || 'Reitseplein',
-          houseNumber: val('admHouseNumber') || '1',
-          houseNumberAddition: val('admHouseNumberAddition') || null,
-          postalCode: val('admPostalCode') || '5037 AA',
           city: val('admCity') || 'Tilburg',
+          houseNumber: parseInt(val('admHouseNumber')) || 1,
+          houseNumberAddition: val('admHouseNumberAddition') || null,
+          furtherIndication: { key: 0, value: 'n.v.t.' },
+          postalCode: val('admPostalCode') || '5037 AA',
+          location: null,
+          country: { key: 530, value: 'Nederland' },
+          province: { key: 0, value: 'Onbekend' },
         },
         contact: {
           name: val('admContactName') || null,
           phoneNumber: val('admContactPhone') || null,
         },
         deviatingPostalAddress: null,
-        payrollTaxesNumber: val('admPayrollTaxNumber') || '143793457L01',
+        payrollTaxesNumber: val('admPayrollTaxNumber') || generateLoonheffingennummer(),
         wageTaxTableColor: { key: parseInt(val('admWageTaxTableColor')) || 1 },
         premiumGroup: { key: parseInt(val('admPremiumGroup')) || 9 },
         premiumGroupUszo: null,
@@ -1455,31 +1622,33 @@
         payrollTaxReturnProcessedBy: { key: parseInt(val('admReturnProcessedBy')) || 1 },
         aofPremiumType: { key: parseInt(val('admAofPremiumType')) || 1 },
         claTaxReturnCBSCode: parseInt(val('admClaCBSCode')) || 233,
-        iban: val('admIban') || 'NL18ABNA7066752391',
+        iban: val('admIban') || generateIBAN(),
         totalSepaFile: document.getElementById('admTotalSepa').checked,
         payslip: {
           template: { key: parseInt(val('admPayslipTemplate')) || 0 },
-          employeeNameDisplay: { key: parseInt(val('admEmployeeNameDisplay')) || 0 },
+          employeeNameDisplayMethod: { key: parseInt(val('admEmployeeNameDisplay')) || 0 },
           addressLocation: { key: parseInt(val('admAddressLocation')) || 0 },
           displaySalutation: document.getElementById('admDisplaySalutation').checked,
-          employeeNumberDisplay: { key: parseInt(val('admEmployeeNumberDisplay')) || 2 },
+          employeeNumberDisplayMethod: { key: parseInt(val('admEmployeeNumberDisplay')) || 2 },
           displayPayScale: document.getElementById('admDisplayPayScale').checked,
-          functionDisplay: { key: parseInt(val('admFunctionDisplay')) || 1 },
-          hourlyWageDisplay: { key: parseInt(val('admHourlyWageDisplay')) || 3 },
-          startDateDisplay: { key: parseInt(val('admStartDateDisplay')) || 1 },
+          functionDisplayMethod: { key: parseInt(val('admFunctionDisplay')) || 1 },
+          hourlyWageDisplayMethod: { key: parseInt(val('admHourlyWageDisplay')) || 3 },
+          employmentStartDateDisplayMethod: { key: parseInt(val('admStartDateDisplay')) || 1 },
           displayDepartment: document.getElementById('admDisplayDepartment').checked,
         },
         defaults: {
           mdvNotification: document.getElementById('admMdvNotification').checked,
           employmentDurationType: { key: parseInt(val('admEmploymentDurationType')) || 1 },
           typeOfEmployee: { key: parseInt(val('admTypeOfEmployee')) || 1 },
-          contractType: { key: parseInt(val('admContractType')) || 1 },
+          employmentContractType: { key: parseInt(val('admContractType')) || 1 },
           grossWageType: { key: parseInt(val('admGrossWageType')) || 1 },
           netWageType: { key: parseInt(val('admNetWageType')) || 1 },
-          calculateWorkPatternHoursBrokenPeriod: document.getElementById('admCalcHoursBroken').checked,
-          calculateWorkPatternHoursRegularPeriod: document.getElementById('admCalcHoursRegular').checked,
-          calculateWorkPatternDaysDailyRate: document.getElementById('admCalcDaysDaily').checked,
-          calculateWorkPatternDeviatingDaysHours: document.getElementById('admCalcDeviating').checked,
+          calculateUsingWorkPattern: {
+            hoursBrokenPeriod: document.getElementById('admCalcHoursBroken').checked,
+            hoursRegularPeriod: document.getElementById('admCalcHoursRegular').checked,
+            daysDailyRate: document.getElementById('admCalcDaysDaily').checked,
+            deviatingDaysAndHours: document.getElementById('admCalcDeviating').checked,
+          },
         },
       };
     }
@@ -1525,13 +1694,16 @@
 
         if (res.ok && data.status >= 200 && data.status < 300) {
           let admId = '';
-          // Try to extract admin ID from Location header or response body
-          if (data.location) {
-            const parts = data.location.split('/');
-            admId = parts[parts.length - 1] || parts[parts.length - 2];
+          // Extract admin ID from content.id, then id, then Location header
+          if (data.data && data.data.content && data.data.content.id) {
+            admId = data.data.content.id;
           }
           if (!admId && data.data && data.data.id) {
             admId = data.data.id;
+          }
+          if (!admId && data.location) {
+            const parts = data.location.split('/');
+            admId = parts[parts.length - 1] || parts[parts.length - 2];
           }
 
           if (admId) {
@@ -1541,11 +1713,14 @@
             document.getElementById('adminLabel').textContent = displayId;
           }
 
+          const warnings = extractWarnings(data);
+
           resultEl.className = 'result success';
           resultEl.innerHTML =
             '<strong>&#10003; Administratie succesvol aangemaakt!</strong>' +
             (admId ? '<br>Administratie ID: <code>' + admId + '</code>' : '') +
             (data.location ? '<br>Location: <code>' + data.location + '</code>' : '') +
+            renderWarnings(warnings) +
             '<pre>' + JSON.stringify(data.data, null, 2) + '</pre>';
           btn.disabled = true;
           btn.innerHTML = '&#10003; Administratie aangemaakt';
@@ -1584,6 +1759,276 @@
     document.getElementById('companyName').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') submitForm();
     });
+
+    // Auto-fill Step 4 + Step 5 fields from employer name
+    document.getElementById('companyName').addEventListener('input', function() {
+      const name = this.value.trim();
+      document.getElementById('admDescription').value = name;
+      document.getElementById('admName').value = name ? name + ' Adm(#)' : '';
+      document.getElementById('empLastName').value = name ? name + 'Werknemer' : '';
+      document.getElementById('empFormattedName').value = name ? name + 'Werknemer A' : '';
+    });
+
+    /* ----- Step 5 helpers ----- */
+    function toggleEmpExtra() {
+      const fields = document.getElementById('empExtraFields');
+      const btn = document.getElementById('toggleEmpBtn');
+      if (fields.style.display === 'block') {
+        fields.style.display = 'none';
+        btn.innerHTML = '<span class="arrow">&#9660;</span> Toon alle velden';
+      } else {
+        fields.style.display = 'block';
+        btn.innerHTML = '<span class="arrow">&#9650;</span> Verberg extra velden';
+      }
+    }
+
+    async function fetchMetadata(accessToken, employerId) {
+      const res = await fetch('/api/get-metadata', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accessToken, employerId }),
+      });
+      const json = await res.json();
+      if (!res.ok || json.status >= 300) {
+        throw new Error('Metadata ophalen mislukt (HTTP ' + (json.status || res.status) + ')');
+      }
+      const embedded = json.data._embedded || [];
+      const meta = {};
+      embedded.forEach(item => {
+        if (item.options && item.options.length > 0) {
+          const first = item.options[0];
+          meta[item.field] = first.id || first.key || null;
+        }
+      });
+      return meta;
+    }
+
+    function buildEmployeePayload(meta) {
+      const admId = val('empPayrollAdmId') || meta.payrollAdministration || val('adminId');
+      const funcKey = val('empFunctionKey') || meta['function'];
+      const deptKey = val('empDepartmentKey') || meta.department;
+      const distKey = val('empDistUnitKey') || meta.distributionUnit;
+
+      return {
+        employeeData: {
+          address: {
+            street: val('empStreet') || 'Reitseplein',
+            city: val('empCity') || 'Tilburg',
+            houseNumber: parseInt(val('empHouseNumber')) || 1,
+            postalCode: val('empPostalCode') || '5037 AA',
+            country: { isoCode: 'NL', key: 530, value: 'Nederland' },
+          },
+          employeeNumber: parseInt(val('empNumber')) || 1,
+          iban: val('empIban') || generateIBAN(),
+          personalDetails: {
+            lastName: val('empLastName'),
+            initials: val('empInitials') || 'A',
+            formattedName: val('empFormattedName') || (val('empLastName') + ' ' + (val('empInitials') || 'A')),
+            dateOfBirth: val('empDateOfBirth') || '2000-01-01',
+            dateOfDeath: val('empDateOfDeath') || '2026-02-23',
+            howToFormatLastName: { key: parseInt(val('empHowToFormat')) || 1 },
+            nationality: { key: parseInt(val('empNationalityKey')) || 143, value: 'Nederlandse' },
+            gender: { key: parseInt(val('empGenderKey')) || 1, value: 'Man' },
+            civilStatus: { key: parseInt(val('empCivilStatusKey')) || 1, value: 'Ongehuwd' },
+          },
+        },
+        employmentData: {
+          startDate: val('empStartDate') || '2026-01-01',
+          payrollAdministration: { id: admId },
+          incomeRelationshipNumber: parseInt(val('empIncomeRelNr')) || 1,
+          employmentDurationType: { key: parseInt(val('empDurationType')) || 1, value: 'Onbepaalde tijd' },
+          startDateContractOfIndefiniteDuration: val('empStartDateIndef') || '2026-01-01',
+          employmentContractType: { key: parseInt(val('empContractType')) || 1, value: 'Arbeidsovereenkomst (excl BBL)' },
+          typeOfEmployee: { key: parseInt(val('empTypeOfEmployee')) || 1, value: 'Werknemer' },
+          isDirectorAndMajorShareholder: false,
+          isOnCallEmployment: false,
+          isAnonymousEmployee: false,
+          isPreviousOwner: false,
+          isFamilyOfOwner: false,
+          isGemoedsbezwaardNationalInsurance: false,
+          isGemoedsbezwaardEmployeeInsurance: false,
+          calculateWorkingHours: true,
+          exemptionInsuranceObligation: { key: parseInt(val('empExemptionKey')) || 0, value: 'Geen uitzondering' },
+          firstDayNotification: false,
+          sendMdvNotification: false,
+          periodPayGradeAdjustment: null,
+          signalPayGradeAdjustment: false,
+          typeOfParticipation: null,
+          valueOfParticipation: null,
+          professionCode: null,
+          deviatingCLATaxReturn: null,
+          participation55plusRegulationUWV: false,
+          emailLeaveRequest: null,
+          writtenEmploymentContract: true,
+        },
+        workingHoursData: {
+          shift: {
+            shiftNumber: parseInt(val('empShiftNumber')) || 1,
+            fullTimeHoursPerWeek: parseInt(val('empFullTimeHours')) || 40,
+            bonusPercentage: parseInt(val('empBonusPercentage')) || 0,
+          },
+          deviatingHoursPerWeek: null,
+          deviatingSvDaysPerPeriod: null,
+          averageParttimeFactor: null,
+          regularWorkPattern: true,
+          flexibleHoursContract: null,
+          calculateUsingWorkPattern: {
+            deviatingDaysAndHours: false,
+            hoursBrokenPeriod: false,
+            hoursPeriod: false,
+            leaveHours: false,
+            daysDailyRate: false,
+          },
+          contractCode: null,
+          workPattern: null,
+        },
+        organizationalEntityData: {
+          'function': { key: funcKey },
+          deviatingFunctionGroup: null,
+          deviatingFunctionDescription: null,
+          standardFunction: null,
+          department: { key: deptKey },
+          distributionUnit: { key: distKey },
+          placeOfEmployment: null,
+          internalTelephoneExtensionNumber: null,
+        },
+        wageData: {
+          grossWage: parseInt(val('empGrossWage')) || 3000,
+          grossWageType: { key: parseInt(val('empGrossWageType')) || 1, value: 'Periodeloon' },
+          netWage: null,
+          netWageType: null,
+          payScale: null,
+          payGrade: null,
+          applyPayGrade: false,
+        },
+        socialSecurityData: {
+          isInsuredForSicknessBenefitsAct: true,
+          isInsuredForUnemploymentInsuranceAct: true,
+          isInsuredForOccupationalDisabilityInsuranceAct: true,
+          healthCareInsuranceActType: { key: parseInt(val('empHealthCareKey')) || 1, value: '(C/K) Wel verzekeringsplichtig, normaal tarief' },
+        },
+        fiscalData: {
+          annualSalary: parseInt(val('empAnnualSalary')) || 50000,
+          deviatingPayrollTaxTableColour: { key: 0, value: 'Niet afwijkend' },
+          applyDayTables: null,
+          deviatingPayrollTaxPercentage: null,
+          applyDeviatingPayrollTaxPercentageOn: { key: 0, value: 'Niet afwijkend' },
+          applyStudentDeduction: false,
+          residentOf: { key: 1, value: '(1) Nederland' },
+          deviatingCalculationRulePayrollTax: { key: 1, value: 'Tabel toepassen zonder herleidingsregel' },
+          applyPayrollTaxDeduction: true,
+        },
+        otherPayrollVariablesData: {
+          deviatingPremiumGroup: null,
+        },
+        citizenServiceNumber: {
+          citizenServiceNumber: val('empBsn') || generateBSN(),
+        },
+      };
+    }
+
+    async function createEmployee() {
+      const accessToken = val('accessToken');
+      const resultEl = document.getElementById('empResult');
+      const btn = document.getElementById('empBtn');
+
+      if (!accessToken) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML = 'Vul eerst een access token in (linkerpaneel).';
+        resultEl.style.display = 'block';
+        return;
+      }
+
+      const employerId = val('employerId');
+      if (!employerId) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML = 'Vul een werkgever ID in (linkerpaneel).';
+        resultEl.style.display = 'block';
+        return;
+      }
+
+      if (!val('empLastName')) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML = 'Vul een achternaam in.';
+        resultEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Metadata ophalen...';
+      resultEl.className = 'result';
+      resultEl.style.display = 'none';
+
+      try {
+        // Step 1: fetch metadata to resolve dynamic keys
+        const meta = await fetchMetadata(accessToken, employerId);
+
+        // Fill metadata fields in UI for visibility
+        if (meta.payrollAdministration && !val('empPayrollAdmId')) {
+          document.getElementById('empPayrollAdmId').value = meta.payrollAdministration;
+        }
+        if (meta['function'] && !val('empFunctionKey')) {
+          document.getElementById('empFunctionKey').value = meta['function'];
+        }
+        if (meta.department && !val('empDepartmentKey')) {
+          document.getElementById('empDepartmentKey').value = meta.department;
+        }
+        if (meta.distributionUnit && !val('empDistUnitKey')) {
+          document.getElementById('empDistUnitKey').value = meta.distributionUnit;
+        }
+
+        btn.innerHTML = '<span class="spinner"></span>Werknemer aanmaken...';
+
+        // Step 2: create the employee
+        const payload = buildEmployeePayload(meta);
+        const res = await fetch('/api/create-employee', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ accessToken, employerId, payload }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.status >= 200 && data.status < 300) {
+          let empId = '';
+          if (data.data && data.data.content && data.data.content.id) {
+            empId = data.data.content.id;
+          }
+          if (!empId && data.location) {
+            const parts = data.location.split('/');
+            empId = parts[parts.length - 1] || parts[parts.length - 2];
+          }
+          if (!empId && data.data && data.data.id) {
+            empId = data.data.id;
+          }
+
+          resultEl.className = 'result success';
+          resultEl.innerHTML =
+            '<strong>&#10003; Werknemer succesvol aangemaakt!</strong>' +
+            (empId ? '<br>Werknemer ID: <code>' + empId + '</code>' : '') +
+            (data.location ? '<br>Location: <code>' + data.location + '</code>' : '') +
+            renderWarnings(extractWarnings(data)) +
+            '<pre>' + JSON.stringify(data.data, null, 2) + '</pre>';
+          btn.disabled = true;
+          btn.innerHTML = '&#10003; Werknemer aangemaakt';
+        } else {
+          resultEl.className = 'result error';
+          resultEl.innerHTML =
+            '<strong>&#10007; Fout (HTTP ' + (data.status || res.status) + ')</strong>' +
+            '<pre>' + JSON.stringify(data.data || data.error || data, null, 2) + '</pre>';
+          btn.disabled = false;
+          btn.innerHTML = 'Werknemer toevoegen';
+        }
+      } catch (err) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML =
+          '<strong>&#10007; Netwerkfout</strong><pre>' + err.message + '</pre>';
+        btn.disabled = false;
+        btn.innerHTML = 'Werknemer toevoegen';
+      }
+
+      resultEl.style.display = 'block';
+    }
   </script>
 </body>
 </html>
