@@ -1,0 +1,6 @@
+{
+  "name": "easy-employer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Eenvoudig werkgevers aanmaken via Loket API"
+}

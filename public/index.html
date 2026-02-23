@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easyEmployer — Loket</title>
+  <link rel="icon" href="https://loket.nl/wp-content/uploads/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --loket-navy: #0f0a3c;
+      --loket-blue: #1d4ed8;
+      --loket-blue-hover: #2563eb;
+      --loket-blue-disabled: #93b4f5;
+      --loket-blue-bg: #eff4ff;
+      --loket-teal: #00c9a7;
+      --loket-teal-dark: #00a98b;
+      --loket-white: #ffffff;
+      --loket-gray-50: #f8f9fc;
+      --loket-gray-100: #f1f3f7;
+      --loket-gray-200: #e2e6ed;
+      --loket-gray-400: #9ca3b4;
+      --loket-gray-600: #5a6178;
+      --loket-gray-800: #2d3148;
+      --loket-radius: 12px;
+      --loket-radius-lg: 20px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--loket-gray-50);
+      color: var(--loket-gray-800);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: var(--loket-navy);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      width: 100%;
+      max-width: 1080px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .header img {
+      height: 32px;
+    }
+    .header .app-title {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      border-left: 1px solid rgba(255,255,255,0.2);
+      padding-left: 1rem;
+    }
+
+    /* Layout */
+    .page-layout {
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem 3rem;
+      gap: 1.5rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+    }
+    .sidebar-card {
+      background: var(--loket-navy);
+      border-radius: var(--loket-radius-lg);
+      padding: 1.5rem;
+      position: sticky;
+      top: 80px;
+      color: var(--loket-white);
+    }
+    .sidebar-card label {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .sidebar-card input {
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      color: var(--loket-white);
+      font-size: 0.9rem;
+    }
+    .sidebar-card input:focus {
+      border-color: var(--loket-teal);
+      box-shadow: 0 0 0 3px rgba(0,201,167,0.2);
+    }
+    .sidebar-card input::placeholder {
+      color: rgba(255,255,255,0.35);
+    }
+    .sidebar-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+    .sidebar-icon {
+      display: inline-block;
+      margin-right: 0.3rem;
+    }
+    .token-status {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .token-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ef4444;
+      flex-shrink: 0;
+    }
+    .token-dot.active {
+      background: var(--loket-teal);
+    }
+
+    /* Test token button */
+    .test-token-btn {
+      margin-top: 0.75rem;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: var(--loket-radius);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .test-token-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: var(--loket-white);
+    }
+    .test-token-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    .test-token-btn.ok {
+      border-color: var(--loket-teal);
+      color: var(--loket-teal);
+    }
+    .test-token-btn.fail {
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+    .token-info {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      word-break: break-word;
+    }
+    .token-info strong {
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      max-width: 680px;
+    }
+
+    /* Step headers */
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 2.5rem 0 1rem;
+    }
+    .step-header:first-child {
+      margin-top: 0;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--loket-white);
+      flex-shrink: 0;
+    }
+    .step-number.blue { background: var(--loket-blue); }
+    .step-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--loket-navy);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--loket-white);
+      border-radius: var(--loket-radius-lg);
+      box-shadow: 0 1px 3px rgba(15,10,60,0.04), 0 4px 16px rgba(15,10,60,0.06);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Labels & inputs */
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      font-size: 0.85rem;
+      color: var(--loket-gray-600);
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1.5px solid var(--loket-gray-200);
+      border-radius: var(--loket-radius);
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      color: var(--loket-gray-800);
+      background: var(--loket-white);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--loket-blue);
+      box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+    }
+    input::placeholder {
+      color: var(--loket-gray-400);
+    }
+    .field-group {
+      margin-bottom: 1rem;
+    }
+    .primary-fields .field-group {
+      margin-bottom: 1.25rem;
+    }
+
+    /* Toggle button */
+    .toggle-btn {
+      background: var(--loket-blue-bg);
+      border: none;
+      border-radius: var(--loket-radius);
+      padding: 0.55rem 1rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--loket-blue);
+      font-weight: 600;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: inherit;
+    }
+    .toggle-btn:hover {
+      background: #dce6ff;
+    }
+    .toggle-btn .arrow {
+      transition: transform 0.3s;
+      font-size: 0.7rem;
+    }
+    .toggle-btn.open .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Extra fields */
+    .extra-fields {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1.5px solid var(--loket-gray-100);
+    }
+    .extra-fields.visible {
+      display: block;
+    }
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--loket-gray-400);
+      margin-bottom: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    /* Action buttons */
+    .action-btn {
+      color: var(--loket-white);
+      border: none;
+      border-radius: var(--loket-radius);
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      width: 100%;
+      font-family: inherit;
+    }
+    .action-btn:active { transform: scale(0.99); }
+    .action-btn:disabled { cursor: not-allowed; transform: none; }
+
+    .action-btn.blue { background: var(--loket-blue); }
+    .action-btn.blue:hover { background: var(--loket-blue-hover); }
+    .action-btn.blue:disabled { background: var(--loket-blue-disabled); }
+
+    /* Result boxes */
+    .result {
+      margin-top: 1rem;
+      padding: 1rem 1.25rem;
+      border-radius: var(--loket-radius);
+      font-size: 0.9rem;
+      display: none;
+      word-break: break-word;
+    }
+    .result.success {
+      display: block;
+      background: #e6faf4;
+      border: 1.5px solid var(--loket-teal);
+      color: #065f46;
+    }
+    .result.error {
+      display: block;
+      background: #fef2f2;
+      border: 1.5px solid #fca5a5;
+      color: #991b1b;
+    }
+    .result pre {
+      margin-top: 0.5rem;
+      background: rgba(0,0,0,0.04);
+      padding: 0.75rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+    }
+
+    /* Checkbox */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      accent-color: var(--loket-blue);
+    }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      color: var(--loket-gray-400);
+      font-size: 0.8rem;
+    }
+    .footer a {
+      color: var(--loket-blue);
+      text-decoration: none;
+    }
+
+    /* Module list */
+    .module-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+    }
+    .module-list li {
+      font-size: 0.8rem;
+      color: var(--loket-gray-600);
+      padding: 0.3rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .module-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--loket-blue);
+      flex-shrink: 0;
+    }
+    .module-count {
+      font-size: 0.85rem;
+      color: var(--loket-gray-400);
+      margin-bottom: 0.75rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 820px) {
+      .page-layout {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      .sidebar {
+        width: 100%;
+      }
+      .sidebar-card {
+        position: static;
+      }
+    }
+    @media (max-width: 520px) {
+      .card { padding: 1.25rem 1.25rem; }
+      .header { padding: 0.75rem 1rem; }
+      .module-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <img src="https://loket.nl/wp-content/uploads/Loket-logo-2.svg" alt="Loket" />
+      <span class="app-title">easyEmployer</span>
+    </div>
+  </div>
+
+  <div class="page-layout">
+    <!-- Sidebar: Accesstoken -->
+    <div class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-title">&#128274; Authenticatie</div>
+        <div class="field-group" style="margin-bottom:0.5rem;">
+          <label for="accessToken">Accesstoken</label>
+          <input type="password" id="accessToken" placeholder="Plak je access token" />
+        </div>
+        <div class="token-status">
+          <span class="token-dot" id="tokenDot"></span>
+          <span id="tokenLabel">Geen token ingevuld</span>
+        </div>
+        <button type="button" class="test-token-btn" id="testTokenBtn" onclick="testToken()">
+          &#128275; Token testen
+        </button>
+        <div class="token-info" id="tokenInfo"></div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:1.25rem 0" />
+
+        <div class="sidebar-title" style="margin-bottom:0.75rem;">&#127981; Provider &amp; Werkgever</div>
+        <div class="field-group" style="margin-bottom:0.75rem;">
+          <label for="providerId">Provider ID</label>
+          <input type="text" id="providerId" readonly placeholder="Wordt opgehaald na token test" style="opacity:0.6;cursor:default;" />
+        </div>
+        <div class="field-group" style="margin-bottom:0.5rem;">
+          <label for="employerId">Werkgever ID</label>
+          <input type="text" id="employerId" placeholder="Wordt auto-ingevuld of plak ID" />
+        </div>
+        <div class="token-status" id="employerStatus" style="margin-top:0.4rem;">
+          <span class="token-dot" id="employerDot"></span>
+          <span id="employerLabel">Geen werkgever ID</span>
+        </div>
+        <div class="field-group" style="margin-top:0.75rem;margin-bottom:0.5rem;">
+          <label for="adminId">Administratie ID</label>
+          <input type="text" id="adminId" readonly placeholder="Wordt ingevuld na aanmaken" style="opacity:0.6;cursor:default;" />
+        </div>
+        <div class="token-status" style="margin-top:0.4rem;">
+          <span class="token-dot" id="adminDot"></span>
+          <span id="adminLabel">Geen administratie</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main steps -->
+    <div class="main-content">
+
+      <!-- Step 1: Create employer -->
+      <div class="card">
+        <div class="step-header" style="margin-top:0;">
+          <span class="step-number blue">1</span>
+          <span class="step-title">Werkgever aanmaken</span>
+        </div>
+
+        <div class="primary-fields">
+          <div class="field-group">
+            <label for="companyName">Werkgevernaam *</label>
+            <input type="text" id="companyName" placeholder="Bijv. Mijn Bedrijf B.V." required />
+          </div>
+        </div>
+
+        <button type="button" class="toggle-btn" id="toggleBtn" onclick="toggleExtra()">
+          <span class="arrow">&#9660;</span> Toon alle velden
+        </button>
+
+        <div class="extra-fields" id="extraFields">
+          <!-- Bedrijfsgegevens -->
+          <div class="section-title">Bedrijfsgegevens</div>
+          <div class="field-group">
+            <label for="chamberOfCommerceNumber">KVK-nummer</label>
+            <input type="text" id="chamberOfCommerceNumber" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="sbi">SBI-code</label>
+            <input type="text" id="sbi" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="legalForm">Rechtsvorm</label>
+            <input type="text" id="legalForm" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="branch">Branche</label>
+            <input type="text" id="branch" placeholder="" />
+          </div>
+
+          <!-- Provider instellingen -->
+          <div class="section-title">Provider instellingen</div>
+          <div class="field-group">
+            <label for="administrationNumber">Administratienummer</label>
+            <input type="text" id="administrationNumber" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="groupCode">Groepscode</label>
+            <input type="text" id="groupCode" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="parentEmployer">Bovenliggende werkgever (consolidatie)</label>
+            <input type="text" id="parentEmployer" placeholder="" />
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="sendEmail" checked />
+            <label for="sendEmail" style="margin-bottom:0">E-mail sturen bij beschikbare salarisstrook</label>
+          </div>
+
+          <!-- Contactpersoon -->
+          <div class="section-title">Contactpersoon</div>
+          <div class="field-group">
+            <label for="contactName">Naam</label>
+            <input type="text" id="contactName" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="contactPhone">Telefoon</label>
+            <input type="text" id="contactPhone" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="contactFunction">Functie</label>
+            <input type="text" id="contactFunction" placeholder="" />
+          </div>
+
+          <!-- Contactgegevens bedrijf -->
+          <div class="section-title">Contactgegevens bedrijf</div>
+          <div class="field-group">
+            <label for="companyPhone">Telefoon</label>
+            <input type="text" id="companyPhone" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="faxNumber">Faxnummer</label>
+            <input type="text" id="faxNumber" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="website">Website</label>
+            <input type="text" id="website" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="emailAddress">E-mailadres</label>
+            <input type="email" id="emailAddress" placeholder="" />
+          </div>
+
+          <!-- Adres -->
+          <div class="section-title">Adres</div>
+          <div class="field-group">
+            <label for="street">Straat</label>
+            <input type="text" id="street" value="Reitseplein" />
+          </div>
+          <div class="field-group">
+            <label for="houseNumber">Huisnummer</label>
+            <input type="text" id="houseNumber" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="houseNumberAddition">Toevoeging</label>
+            <input type="text" id="houseNumberAddition" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="postalCode">Postcode</label>
+            <input type="text" id="postalCode" value="5037 AA" />
+          </div>
+          <div class="field-group">
+            <label for="city">Plaats</label>
+            <input type="text" id="city" value="Tilburg" />
+          </div>
+          <div class="field-group">
+            <label for="province">Provincie</label>
+            <input type="text" id="province" placeholder="" />
+          </div>
+        </div>
+
+        <button class="action-btn blue" id="submitBtn" onclick="submitForm()" disabled>
+          Werkgever aanmaken
+        </button>
+        <div class="result" id="result"></div>
+      </div>
+
+      <!-- Step 2: Assign team -->
+      <div class="card">
+        <div class="step-header" style="margin-top:0;">
+          <span class="step-number blue">2</span>
+          <span class="step-title">Toevoegen aan team</span>
+        </div>
+        <div class="field-group">
+          <label for="teamId">Team ID</label>
+          <input type="text" id="teamId" value="2a5b3d83-89e5-461b-bccd-e294b4c4f62a" />
+        </div>
+        <button class="action-btn blue" id="teamBtn" onclick="assignTeam()" disabled>
+          Toevoegen aan team
+        </button>
+        <div class="result" id="teamResult"></div>
+      </div>
+
+      <!-- Step 3: Assign modules -->
+      <div class="card">
+        <div class="step-header" style="margin-top:0;">
+          <span class="step-number blue">3</span>
+          <span class="step-title">Koppelen aan producten</span>
+        </div>
+        <div class="module-count" id="moduleCount">52 producten worden geactiveerd</div>
+
+        <button type="button" class="toggle-btn" id="toggleModulesBtn" onclick="toggleModules()">
+          <span class="arrow">&#9660;</span> Toon alle producten
+        </button>
+
+        <div class="extra-fields" id="moduleFields">
+          <ul class="module-list" id="moduleList"></ul>
+        </div>
+
+        <button class="action-btn blue" id="modulesBtn" onclick="assignModules()" disabled>
+          Producten activeren
+        </button>
+        <div class="result" id="modulesResult"></div>
+      </div>
+
+      <!-- Step 4: Create administration -->
+      <div class="card">
+        <div class="step-header" style="margin-top:0;">
+          <span class="step-number blue">4</span>
+          <span class="step-title">Administratie aanmaken</span>
+        </div>
+
+        <div class="primary-fields">
+          <div class="field-group">
+            <label for="admName">Naam administratie *</label>
+            <input type="text" id="admName" placeholder="Bijv. ApiTest1" required />
+          </div>
+          <div class="field-group">
+            <label for="admDescription">Omschrijving</label>
+            <input type="text" id="admDescription" placeholder="Bijv. apiTestAdm(#)" />
+          </div>
+          <div class="field-group">
+            <label for="admPayrollYear">Loonjaar *</label>
+            <input type="number" id="admPayrollYear" value="2026" />
+          </div>
+          <div class="field-group">
+            <label for="admPayrollTaxNumber">Loonheffingennummer *</label>
+            <input type="text" id="admPayrollTaxNumber" value="143793457L01" />
+          </div>
+          <div class="field-group">
+            <label for="admIban">IBAN</label>
+            <input type="text" id="admIban" value="NL18ABNA7066752391" />
+          </div>
+        </div>
+
+        <button type="button" class="toggle-btn" id="toggleAdmBtn" onclick="toggleAdmExtra()">
+          <span class="arrow">&#9660;</span> Toon alle velden
+        </button>
+
+        <div class="extra-fields" id="admExtraFields">
+          <div class="section-title">Loonmodel</div>
+          <div class="field-group">
+            <label for="admWageModelId">Wage Model ID</label>
+            <input type="text" id="admWageModelId" value="38c23b6f-04f2-43cc-887f-7636f619e24c" />
+          </div>
+
+          <div class="section-title">Provider instellingen</div>
+          <div class="field-group">
+            <label for="admAdministrationNumber">Administratienummer</label>
+            <input type="text" id="admAdministrationNumber" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="admGroupCode">Groepscode</label>
+            <input type="text" id="admGroupCode" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="admShortName">Korte naam</label>
+            <input type="text" id="admShortName" placeholder="" />
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admTestYear" />
+            <label for="admTestYear" style="margin-bottom:0">Testjaar</label>
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admIsInternal" />
+            <label for="admIsInternal" style="margin-bottom:0">Interne salarisadministratie</label>
+          </div>
+
+          <div class="section-title">Synchronisatie</div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admSyncName" checked />
+            <label for="admSyncName" style="margin-bottom:0">Naam en adres synchroniseren</label>
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admSyncContact" checked />
+            <label for="admSyncContact" style="margin-bottom:0">Contactgegevens synchroniseren</label>
+          </div>
+
+          <div class="section-title">Adres</div>
+          <div class="field-group">
+            <label for="admStreet">Straat</label>
+            <input type="text" id="admStreet" value="Reitseplein" />
+          </div>
+          <div class="field-group">
+            <label for="admHouseNumber">Huisnummer</label>
+            <input type="text" id="admHouseNumber" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admHouseNumberAddition">Toevoeging</label>
+            <input type="text" id="admHouseNumberAddition" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="admPostalCode">Postcode</label>
+            <input type="text" id="admPostalCode" value="5037 AA" />
+          </div>
+          <div class="field-group">
+            <label for="admCity">Plaats</label>
+            <input type="text" id="admCity" value="Tilburg" />
+          </div>
+
+          <div class="section-title">Contactpersoon</div>
+          <div class="field-group">
+            <label for="admContactName">Naam</label>
+            <input type="text" id="admContactName" placeholder="" />
+          </div>
+          <div class="field-group">
+            <label for="admContactPhone">Telefoon</label>
+            <input type="text" id="admContactPhone" placeholder="" />
+          </div>
+
+          <div class="section-title">Loonbelasting</div>
+          <div class="field-group">
+            <label for="admWageTaxTableColor">Loontabel kleur (key)</label>
+            <input type="number" id="admWageTaxTableColor" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admPremiumGroup">Premiegroep (key)</label>
+            <input type="number" id="admPremiumGroup" value="9" />
+          </div>
+          <div class="field-group">
+            <label for="admMethodCreation">Methode aangifte (key)</label>
+            <input type="number" id="admMethodCreation" value="2" />
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admAnnualReturn" />
+            <label for="admAnnualReturn" style="margin-bottom:0">Jaaraangifte</label>
+          </div>
+          <div class="field-group">
+            <label for="admReturnProcessedBy">Verwerkt door (key)</label>
+            <input type="number" id="admReturnProcessedBy" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admAofPremiumType">AOF premie type (key)</label>
+            <input type="number" id="admAofPremiumType" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admClaCBSCode">CAO CBS code</label>
+            <input type="number" id="admClaCBSCode" value="233" />
+          </div>
+
+          <div class="section-title">SEPA</div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admTotalSepa" />
+            <label for="admTotalSepa" style="margin-bottom:0">Totaal SEPA bestand</label>
+          </div>
+
+          <div class="section-title">Salarisstrook</div>
+          <div class="field-group">
+            <label for="admPayslipTemplate">Template (key)</label>
+            <input type="number" id="admPayslipTemplate" value="0" />
+          </div>
+          <div class="field-group">
+            <label for="admEmployeeNameDisplay">Naam werknemer weergave (key)</label>
+            <input type="number" id="admEmployeeNameDisplay" value="0" />
+          </div>
+          <div class="field-group">
+            <label for="admAddressLocation">Adreslocatie (key)</label>
+            <input type="number" id="admAddressLocation" value="0" />
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admDisplaySalutation" />
+            <label for="admDisplaySalutation" style="margin-bottom:0">Aanhef tonen</label>
+          </div>
+          <div class="field-group">
+            <label for="admEmployeeNumberDisplay">Personeelsnummer weergave (key)</label>
+            <input type="number" id="admEmployeeNumberDisplay" value="2" />
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admDisplayPayScale" />
+            <label for="admDisplayPayScale" style="margin-bottom:0">Salarisschaal tonen</label>
+          </div>
+          <div class="field-group">
+            <label for="admFunctionDisplay">Functie weergave (key)</label>
+            <input type="number" id="admFunctionDisplay" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admHourlyWageDisplay">Uurloon weergave (key)</label>
+            <input type="number" id="admHourlyWageDisplay" value="3" />
+          </div>
+          <div class="field-group">
+            <label for="admStartDateDisplay">Indienstdatum weergave (key)</label>
+            <input type="number" id="admStartDateDisplay" value="1" />
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admDisplayDepartment" />
+            <label for="admDisplayDepartment" style="margin-bottom:0">Afdeling tonen</label>
+          </div>
+
+          <div class="section-title">Standaardwaarden dienstverband</div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admMdvNotification" />
+            <label for="admMdvNotification" style="margin-bottom:0">MDV notificatie</label>
+          </div>
+          <div class="field-group">
+            <label for="admEmploymentDurationType">Duur dienstverband type (key)</label>
+            <input type="number" id="admEmploymentDurationType" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admTypeOfEmployee">Type werknemer (key)</label>
+            <input type="number" id="admTypeOfEmployee" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admContractType">Contracttype (key)</label>
+            <input type="number" id="admContractType" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admGrossWageType">Bruto loontype (key)</label>
+            <input type="number" id="admGrossWageType" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="admNetWageType">Netto loontype (key)</label>
+            <input type="number" id="admNetWageType" value="1" />
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admCalcHoursBroken" />
+            <label for="admCalcHoursBroken" style="margin-bottom:0">Berekenen werkpatroon: uren gebroken periode</label>
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admCalcHoursRegular" />
+            <label for="admCalcHoursRegular" style="margin-bottom:0">Berekenen werkpatroon: uren reguliere periode</label>
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admCalcDaysDaily" />
+            <label for="admCalcDaysDaily" style="margin-bottom:0">Berekenen werkpatroon: dagen dagtarief</label>
+          </div>
+          <div class="field-group checkbox-group">
+            <input type="checkbox" id="admCalcDeviating" />
+            <label for="admCalcDeviating" style="margin-bottom:0">Berekenen werkpatroon: afwijkende dagen/uren</label>
+          </div>
+        </div>
+
+        <button class="action-btn blue" id="admBtn" onclick="createAdministration()" disabled>
+          Administratie aanmaken
+        </button>
+        <div class="result" id="admResult"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    Loket &middot; Reitseplein 1, 5037 AA Tilburg &middot; <a href="https://loket.nl" target="_blank">loket.nl</a>
+  </div>
+
+  <script>
+    // Module definitions
+    const MODULES = [
+      { id: '6e385e0f-9bf5-4512-bbfd-f1a956159516', action: 'enable' },
+      { id: 'd6a4e1a9-2541-4d9b-b801-cfffd703007a', action: 'enable' },
+      { id: 'd65b14c5-6ee6-4231-a68b-f5d923fa6aa9', action: 'enable' },
+      { id: 'c2997c59-65f4-4ed9-bb36-d7b1bd2581c4', action: 'enable' },
+      { id: 'e55e2e90-a1e0-4bf0-ba57-a2c9161afeee', action: 'enable' },
+      { id: '63da9f4b-d777-41c2-9cf7-6e86c60d344d', action: 'enable' },
+      { id: 'cbafd290-bde6-4c0d-96c8-f3c14b884bab', action: 'enable' },
+      { id: 'e234106f-2687-4776-8287-5dfbb51758f4', action: 'enable' },
+      { id: '6bb8fa8a-3ee8-4609-8267-ea102240fb75', action: 'enable' },
+      { id: '08268b7d-d632-4895-8565-af657ac56039', action: 'enable' },
+      { id: '45f364a1-c9ee-4f40-88a9-74c76695a757', action: 'enable' },
+      { id: '11be5720-6e07-42d2-9074-19416a51fd5f', action: 'enable' },
+      { id: 'df25d366-5269-4b70-b6f2-5e021eb3bbbc', action: 'enable' },
+      { id: '2bf3ee3e-a377-434b-ac6a-c555966389ac', action: 'enable' },
+      { id: 'ae0e876b-8eb0-4ffd-a09f-82d6f76b331b', action: 'enable' },
+      { id: '37be72b5-ef1c-4f06-8a04-fcd20b175714', action: 'enable' },
+      { id: '9dd99930-1a19-421c-8d96-fdb4a6fc2359', action: 'enable' },
+      { id: '1b067c44-0fb0-4b60-9d2a-86d72d17912f', action: 'enable' },
+      { id: '5fca8828-5935-46de-a3cb-2e8832b0a80b', action: 'enable' },
+      { id: '32cb5059-ef11-4e45-a6bd-d2c8ff995a98', action: 'enable' },
+      { id: '8aa4d415-f0c3-4a2e-be9a-23e87459e0a3', action: 'enable' },
+      { id: '5989e393-fc91-4a77-9deb-51d0626ac560', action: 'enable' },
+      { id: '7eb1622d-29c3-488d-aa5b-5eb071728c81', action: 'enable' },
+      { id: '07b6f19b-5118-4b46-a29c-2e6fe4ecdae8', action: 'enable' },
+      { id: 'fd265beb-056d-4c80-8364-80b41194615d', action: 'enable' },
+      { id: 'cd0b2cb3-1353-49b7-a140-107b923c27af', action: 'enable' },
+      { id: '9b0440f9-d83f-4d8e-b52f-d8fcf1bfde0b', action: 'enable' },
+      { id: '60fa21df-c390-4470-b835-36d84735f9b2', action: 'enable' },
+      { id: 'dcb0a89e-ac96-454b-bb01-a61abd2956dc', action: 'enable' },
+      { id: '0c138c1e-c8b1-437e-ba29-0454413c6767', action: 'enable' },
+      { id: '790aa6c7-7da1-448b-9927-a9f8ea333bd6', action: 'enable' },
+      { id: '0ac70bca-1656-449d-9dd7-698177cd6194', action: 'enable' },
+      { id: '066eef86-6a52-4b01-870a-f2b620222c3c', action: 'enable' },
+      { id: 'e3cd6964-aba0-459e-9ad7-a6d559634141', action: 'enable' },
+      { id: '9b58cc4e-0a34-44ad-be25-38c320563014', action: 'enable' },
+      { id: 'f9d9483a-8138-403e-b483-5f10d02e05b4', action: 'enable' },
+      { id: '4890248c-721e-4b26-b88d-0e5a04dcef93', action: 'enable' },
+      { id: 'ba123031-26e9-4c34-b5a6-7e5746395423', action: 'enable' },
+      { id: 'aecc7799-2b83-47f4-950e-6645762274c4', action: 'enable' },
+      { id: '36b5b0b4-8f37-494f-970d-3b6dec2b896b', action: 'enable' },
+      { id: 'f6bbfe88-701d-4d99-877d-8ee780ad2296', action: 'enable' },
+      { id: 'e1a57976-3987-4c1d-a899-131727545174', action: 'enable' },
+      { id: 'ecb0693b-9525-4712-afda-68d8e7fa8a52', action: 'enable' },
+      { id: '3de81266-043e-4336-bd97-f98e5b824464', action: 'enable' },
+      { id: '4ff6ce00-8185-4336-86af-22a8f9839fe0', action: 'enable' },
+      { id: '5b122343-43dc-422c-b8d9-655837d02c1e', action: 'enable' },
+      { id: '4e7362cb-16a7-48eb-8496-61742efaaa2f', action: 'enable' },
+      { id: 'd9cd37b9-5f0e-4349-8197-50b70d831dbd', action: 'enable' },
+      { id: '23ca49ee-deff-4c79-9d53-f19357c24181', action: 'enable' },
+      { id: '12522f18-f8d0-46ee-9de5-c850034bee9c', action: 'enable' },
+      { id: 'e7b78018-316d-4725-8610-112be09c8f7b', action: 'enable' },
+      { id: '21ef0573-0334-430c-a4cb-e088353c3687', action: 'enable' },
+    ];
+
+    // Render module list
+    (function renderModules() {
+      const list = document.getElementById('moduleList');
+      MODULES.forEach(m => {
+        const li = document.createElement('li');
+        li.textContent = m.id.substring(0, 8) + '…';
+        li.title = m.id;
+        list.appendChild(li);
+      });
+      document.getElementById('moduleCount').textContent = MODULES.length + ' producten worden geactiveerd';
+    })();
+
+    // Token status indicator — also reset buttons when token changes
+    document.getElementById('accessToken').addEventListener('input', function() {
+      const dot = document.getElementById('tokenDot');
+      const label = document.getElementById('tokenLabel');
+      if (this.value.trim()) {
+        dot.classList.add('active');
+        label.textContent = 'Token ingevuld — test vereist';
+      } else {
+        dot.classList.remove('active');
+        label.textContent = 'Geen token ingevuld';
+      }
+      // Disable buttons until new test
+      setButtonsEnabled(false);
+      document.getElementById('providerId').value = '';
+      document.getElementById('providerId').style.opacity = '0.6';
+    });
+
+    function setButtonsEnabled(enabled) {
+      ['submitBtn', 'teamBtn', 'modulesBtn', 'admBtn'].forEach(id => {
+        document.getElementById(id).disabled = !enabled;
+      });
+    }
+
+    async function fetchProviderId(accessToken) {
+      const providerInput = document.getElementById('providerId');
+      try {
+        const res = await fetch('/api/get-providers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ accessToken }),
+        });
+        const data = await res.json();
+        if (res.ok && data.status >= 200 && data.status < 300) {
+          const embedded = data.data?._embedded;
+          const provider = Array.isArray(embedded) ? embedded[0] : null;
+          if (provider?.id) {
+            providerInput.value = provider.id;
+            providerInput.style.opacity = '1';
+            return { id: provider.id, name: provider.name || null };
+          }
+        }
+      } catch (e) {
+        console.error('Provider fetch failed:', e);
+      }
+      providerInput.value = '';
+      providerInput.placeholder = 'Ophalen mislukt';
+      return null;
+    }
+
+    async function testToken() {
+      const accessToken = val('accessToken');
+      const btn = document.getElementById('testTokenBtn');
+      const info = document.getElementById('tokenInfo');
+      const dot = document.getElementById('tokenDot');
+      const label = document.getElementById('tokenLabel');
+
+      // Disable all action buttons while testing
+      setButtonsEnabled(false);
+
+      if (!accessToken) {
+        btn.className = 'test-token-btn fail';
+        btn.innerHTML = '&#10007; Geen token';
+        info.innerHTML = '';
+        setTimeout(() => { btn.className = 'test-token-btn'; btn.innerHTML = '&#128275; Token testen'; }, 2000);
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:1.5px;"></span>Testen...';
+      info.innerHTML = '';
+
+      let tokenValid = false;
+
+      try {
+        const res = await fetch('/api/test-token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ accessToken }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.status >= 200 && data.status < 300) {
+          dot.classList.add('active');
+          label.textContent = 'Token geldig';
+
+          // Show token details
+          const d = data.data || {};
+          let details = '';
+          if (d.userName) details += '<strong>Gebruiker:</strong> ' + d.userName + '<br>';
+          if (d.clientId) details += '<strong>Client:</strong> ' + d.clientId + '<br>';
+          if (d.expires_in != null) {
+            const mins = Math.floor(d.expires_in / 60);
+            details += '<strong>Verloopt over:</strong> ' + mins + ' min<br>';
+          }
+          if (d.scope) details += '<strong>Scope:</strong> ' + d.scope + '<br>';
+          info.innerHTML = details;
+
+          tokenValid = true;
+
+          // Fetch provider ID
+          btn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:1.5px;"></span>Provider ophalen...';
+          const provider = await fetchProviderId(accessToken);
+          if (provider) {
+            info.innerHTML += '<strong>Provider:</strong> ' + (provider.name || provider.id.substring(0, 8) + '&hellip;') + '<br>';
+            btn.className = 'test-token-btn ok';
+            btn.innerHTML = '&#10003; Token geldig';
+            setButtonsEnabled(true);
+          } else {
+            btn.className = 'test-token-btn fail';
+            btn.innerHTML = '&#10007; Provider niet gevonden';
+            info.innerHTML += '<span style="color:#fca5a5">Kon provider ID niet ophalen</span>';
+          }
+        } else {
+          btn.className = 'test-token-btn fail';
+          btn.innerHTML = '&#10007; Token ongeldig';
+          dot.classList.remove('active');
+          label.textContent = 'Token ongeldig';
+          info.innerHTML = '<span style="color:#fca5a5">' + (typeof data.data === 'string' ? data.data : JSON.stringify(data.data)) + '</span>';
+        }
+      } catch (err) {
+        btn.className = 'test-token-btn fail';
+        btn.innerHTML = '&#10007; Fout';
+        info.innerHTML = '<span style="color:#fca5a5">' + err.message + '</span>';
+      }
+
+      btn.disabled = false;
+      if (tokenValid) {
+        setTimeout(() => { btn.className = 'test-token-btn'; btn.innerHTML = '&#128275; Token testen'; }, 5000);
+      } else {
+        setTimeout(() => { btn.className = 'test-token-btn'; btn.innerHTML = '&#128275; Token testen'; }, 3000);
+      }
+    }
+
+    function toggleExtra() {
+      const extra = document.getElementById('extraFields');
+      const btn = document.getElementById('toggleBtn');
+      const isVisible = extra.classList.toggle('visible');
+      btn.classList.toggle('open', isVisible);
+      btn.innerHTML = isVisible
+        ? '<span class="arrow">&#9660;</span> Verberg extra velden'
+        : '<span class="arrow">&#9660;</span> Toon alle velden';
+    }
+
+    function toggleModules() {
+      const fields = document.getElementById('moduleFields');
+      const btn = document.getElementById('toggleModulesBtn');
+      const isVisible = fields.classList.toggle('visible');
+      btn.classList.toggle('open', isVisible);
+      btn.innerHTML = isVisible
+        ? '<span class="arrow">&#9660;</span> Verberg producten'
+        : '<span class="arrow">&#9660;</span> Toon alle producten';
+    }
+
+    function cleanToken(raw) {
+      if (!raw) return raw;
+      let t = raw.trim();
+      t = t.replace(/^\{/, '').replace(/\}$/, '').trim();
+      t = t.replace(/^["']?access_token["']?\s*:\s*/i, '').trim();
+      t = t.replace(/^["']/, '').replace(/["'],?\s*$/, '').trim();
+      return t;
+    }
+
+    function val(id) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      let v = el.value.trim();
+      if (id === 'accessToken') v = cleanToken(v);
+      return v === '' ? null : v;
+    }
+
+    function buildPayload() {
+      return {
+        companyName: val('companyName'),
+        chamberOfCommerceNumber: val('chamberOfCommerceNumber'),
+        employerLogo: null,
+        providerLogo: null,
+        sbi: val('sbi'),
+        legalForm: val('legalForm'),
+        branch: val('branch'),
+        providerSettings: {
+          administrationNumber: val('administrationNumber'),
+          groupCode: val('groupCode'),
+          parentEmployerForConsolidatedOverviews: val('parentEmployer'),
+          sendEmailWhenSalarySlipIsAvailable: document.getElementById('sendEmail').checked,
+        },
+        contact: {
+          name: val('contactName'),
+          phoneNumber: val('contactPhone'),
+          function: val('contactFunction'),
+        },
+        contactInformation: {
+          phoneNumber: val('companyPhone'),
+          faxNumber: val('faxNumber'),
+          website: val('website'),
+          emailAddress: val('emailAddress'),
+        },
+        address: {
+          street: val('street') || 'Reitseplein',
+          city: val('city') || 'Tilburg',
+          houseNumber: val('houseNumber') || '1',
+          houseNumberAddition: val('houseNumberAddition'),
+          postalCode: val('postalCode') || '5037 AA',
+          country: {
+            isoCode: 'NL',
+            key: 530,
+            value: 'Nederland',
+          },
+          province: val('province'),
+        },
+        deviatingPostalAddress: null,
+      };
+    }
+
+    let createdEmployerId = null;
+
+    async function submitForm() {
+      const companyName = val('companyName');
+      const accessToken = val('accessToken');
+      const resultEl = document.getElementById('result');
+      const btn = document.getElementById('submitBtn');
+
+      if (!companyName) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML = 'Vul een werkgevernaam in.';
+        return;
+      }
+      if (!accessToken) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML = 'Vul eerst een access token in (linkerpaneel).';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Bezig met aanmaken...';
+      resultEl.className = 'result';
+      resultEl.style.display = 'none';
+
+      const payload = buildPayload();
+
+      try {
+        const providerId = val('providerId');
+        if (!providerId) {
+          resultEl.className = 'result error';
+          resultEl.innerHTML = 'Geen provider ID beschikbaar. Test eerst je token.';
+          btn.disabled = false;
+          btn.innerHTML = 'Werkgever aanmaken';
+          return;
+        }
+
+        const res = await fetch('/api/create-employer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ accessToken, payload, providerId }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.status >= 200 && data.status < 300) {
+          createdEmployerId = (data.data && data.data.id) ? data.data.id : null;
+
+          if (!createdEmployerId && data.location) {
+            const parts = data.location.split('/');
+            createdEmployerId = parts[parts.length - 1] || null;
+          }
+
+          resultEl.className = 'result success';
+          resultEl.innerHTML =
+            '<strong>&#10003; Werkgever succesvol aangemaakt!</strong>' +
+            (createdEmployerId ? '<br>Employer ID: <code style="user-select:all">' + createdEmployerId + '</code>' : '') +
+            '<pre>' + JSON.stringify(data.data, null, 2) + '</pre>';
+
+          btn.disabled = true;
+          btn.innerHTML = '&#10003; Werkgever aangemaakt';
+
+          // Auto-fill employer ID in sidebar
+          if (createdEmployerId) {
+            document.getElementById('employerId').value = createdEmployerId;
+            document.getElementById('employerDot').classList.add('active');
+            document.getElementById('employerLabel').textContent = createdEmployerId.substring(0, 8) + '…';
+            document.getElementById('teamBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          resultEl.className = 'result error';
+          resultEl.innerHTML =
+            '<strong>&#10007; Fout (HTTP ' + (data.status || res.status) + ')</strong>' +
+            '<pre>' + JSON.stringify(data.data || data.error || data, null, 2) + '</pre>';
+          btn.disabled = false;
+          btn.innerHTML = 'Werkgever aanmaken';
+        }
+      } catch (err) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML =
+          '<strong>&#10007; Netwerkfout</strong><pre>' + err.message + '</pre>';
+        btn.disabled = false;
+        btn.innerHTML = 'Werkgever aanmaken';
+      }
+    }
+
+    async function assignTeam() {
+      const accessToken = val('accessToken');
+      const teamId = val('teamId');
+      const teamResultEl = document.getElementById('teamResult');
+      const teamBtn = document.getElementById('teamBtn');
+
+      if (!accessToken) {
+        teamResultEl.className = 'result error';
+        teamResultEl.innerHTML = 'Vul eerst een access token in (linkerpaneel).';
+        return;
+      }
+      if (!teamId) {
+        teamResultEl.className = 'result error';
+        teamResultEl.innerHTML = 'Vul een team ID in.';
+        return;
+      }
+
+      const employerId = val('employerId');
+      if (!employerId) {
+        teamResultEl.className = 'result error';
+        teamResultEl.innerHTML = 'Vul een werkgever ID in (linkerpaneel).';
+        return;
+      }
+
+      teamBtn.disabled = true;
+      teamBtn.innerHTML = '<span class="spinner"></span>Bezig met toewijzen...';
+      teamResultEl.className = 'result';
+      teamResultEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/assign-team', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            accessToken,
+            employerId: employerId,
+            providerId: val('providerId'),
+            teamIds: [teamId],
+          }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.status >= 200 && data.status < 300) {
+          teamResultEl.className = 'result success';
+          teamResultEl.innerHTML =
+            '<strong>&#10003; Werkgever succesvol aan team toegevoegd!</strong>' +
+            '<pre>' + JSON.stringify(data.data, null, 2) + '</pre>';
+          teamBtn.disabled = true;
+          teamBtn.innerHTML = '&#10003; Aan team toegevoegd';
+        } else {
+          teamResultEl.className = 'result error';
+          teamResultEl.innerHTML =
+            '<strong>&#10007; Fout (HTTP ' + (data.status || res.status) + ')</strong>' +
+            '<pre>' + JSON.stringify(data.data || data.error || data, null, 2) + '</pre>';
+          teamBtn.disabled = false;
+          teamBtn.innerHTML = 'Toevoegen aan team';
+        }
+      } catch (err) {
+        teamResultEl.className = 'result error';
+        teamResultEl.innerHTML =
+          '<strong>&#10007; Netwerkfout</strong><pre>' + err.message + '</pre>';
+        teamBtn.disabled = false;
+        teamBtn.innerHTML = 'Toevoegen aan team';
+      }
+    }
+
+    async function assignModules() {
+      const accessToken = val('accessToken');
+      const modulesResultEl = document.getElementById('modulesResult');
+      const modulesBtn = document.getElementById('modulesBtn');
+
+      if (!accessToken) {
+        modulesResultEl.className = 'result error';
+        modulesResultEl.innerHTML = 'Vul eerst een access token in (linkerpaneel).';
+        return;
+      }
+
+      const employerId = val('employerId');
+      if (!employerId) {
+        modulesResultEl.className = 'result error';
+        modulesResultEl.innerHTML = 'Vul een werkgever ID in (linkerpaneel).';
+        return;
+      }
+
+      modulesBtn.disabled = true;
+      modulesBtn.innerHTML = '<span class="spinner"></span>Bezig met activeren...';
+      modulesResultEl.className = 'result';
+      modulesResultEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/assign-modules', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            accessToken,
+            employerId: employerId,
+            providerId: val('providerId'),
+            modules: MODULES,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.status >= 200 && data.status < 300) {
+          modulesResultEl.className = 'result success';
+          modulesResultEl.innerHTML =
+            '<strong>&#10003; ' + MODULES.length + ' producten succesvol geactiveerd!</strong>' +
+            '<pre>' + JSON.stringify(data.data, null, 2) + '</pre>';
+          modulesBtn.disabled = true;
+          modulesBtn.innerHTML = '&#10003; Producten geactiveerd';
+        } else {
+          modulesResultEl.className = 'result error';
+          modulesResultEl.innerHTML =
+            '<strong>&#10007; Fout (HTTP ' + (data.status || res.status) + ')</strong>' +
+            '<pre>' + JSON.stringify(data.data || data.error || data, null, 2) + '</pre>';
+          modulesBtn.disabled = false;
+          modulesBtn.innerHTML = 'Producten activeren';
+        }
+      } catch (err) {
+        modulesResultEl.className = 'result error';
+        modulesResultEl.innerHTML =
+          '<strong>&#10007; Netwerkfout</strong><pre>' + err.message + '</pre>';
+        modulesBtn.disabled = false;
+        modulesBtn.innerHTML = 'Producten activeren';
+      }
+    }
+
+    /* ----- Step 4 helpers ----- */
+    function toggleAdmExtra() {
+      const fields = document.getElementById('admExtraFields');
+      const btn = document.getElementById('toggleAdmBtn');
+      if (fields.style.display === 'block') {
+        fields.style.display = 'none';
+        btn.innerHTML = '<span class="arrow">&#9660;</span> Toon alle velden';
+      } else {
+        fields.style.display = 'block';
+        btn.innerHTML = '<span class="arrow">&#9650;</span> Verberg extra velden';
+      }
+    }
+
+    function buildAdminPayload() {
+      return {
+        wageModel: { id: val('admWageModelId') || '38c23b6f-04f2-43cc-887f-7636f619e24c' },
+        administrationNumber: val('admAdministrationNumber') || null,
+        groupCode: val('admGroupCode') || null,
+        name: val('admName'),
+        shortName: val('admShortName') || null,
+        description: val('admDescription') || null,
+        isInternalPayrollAdministration: document.getElementById('admIsInternal').checked,
+        withholdingParty: null,
+        groupClassification: null,
+        payrollYear: parseInt(val('admPayrollYear')) || 2026,
+        testYear: document.getElementById('admTestYear').checked,
+        synchronize: {
+          nameAndAddress: document.getElementById('admSyncName').checked,
+          contactInformation: document.getElementById('admSyncContact').checked,
+        },
+        address: {
+          street: val('admStreet') || 'Reitseplein',
+          houseNumber: val('admHouseNumber') || '1',
+          houseNumberAddition: val('admHouseNumberAddition') || null,
+          postalCode: val('admPostalCode') || '5037 AA',
+          city: val('admCity') || 'Tilburg',
+        },
+        contact: {
+          name: val('admContactName') || null,
+          phoneNumber: val('admContactPhone') || null,
+        },
+        deviatingPostalAddress: null,
+        payrollTaxesNumber: val('admPayrollTaxNumber') || '143793457L01',
+        wageTaxTableColor: { key: parseInt(val('admWageTaxTableColor')) || 1 },
+        premiumGroup: { key: parseInt(val('admPremiumGroup')) || 9 },
+        premiumGroupUszo: null,
+        methodOfCreationPayrollTaxReturn: { key: parseInt(val('admMethodCreation')) || 2 },
+        annualPayrollTaxReturn: document.getElementById('admAnnualReturn').checked,
+        payrollTaxReturnProcessedBy: { key: parseInt(val('admReturnProcessedBy')) || 1 },
+        aofPremiumType: { key: parseInt(val('admAofPremiumType')) || 1 },
+        claTaxReturnCBSCode: parseInt(val('admClaCBSCode')) || 233,
+        iban: val('admIban') || 'NL18ABNA7066752391',
+        totalSepaFile: document.getElementById('admTotalSepa').checked,
+        payslip: {
+          template: { key: parseInt(val('admPayslipTemplate')) || 0 },
+          employeeNameDisplay: { key: parseInt(val('admEmployeeNameDisplay')) || 0 },
+          addressLocation: { key: parseInt(val('admAddressLocation')) || 0 },
+          displaySalutation: document.getElementById('admDisplaySalutation').checked,
+          employeeNumberDisplay: { key: parseInt(val('admEmployeeNumberDisplay')) || 2 },
+          displayPayScale: document.getElementById('admDisplayPayScale').checked,
+          functionDisplay: { key: parseInt(val('admFunctionDisplay')) || 1 },
+          hourlyWageDisplay: { key: parseInt(val('admHourlyWageDisplay')) || 3 },
+          startDateDisplay: { key: parseInt(val('admStartDateDisplay')) || 1 },
+          displayDepartment: document.getElementById('admDisplayDepartment').checked,
+        },
+        defaults: {
+          mdvNotification: document.getElementById('admMdvNotification').checked,
+          employmentDurationType: { key: parseInt(val('admEmploymentDurationType')) || 1 },
+          typeOfEmployee: { key: parseInt(val('admTypeOfEmployee')) || 1 },
+          contractType: { key: parseInt(val('admContractType')) || 1 },
+          grossWageType: { key: parseInt(val('admGrossWageType')) || 1 },
+          netWageType: { key: parseInt(val('admNetWageType')) || 1 },
+          calculateWorkPatternHoursBrokenPeriod: document.getElementById('admCalcHoursBroken').checked,
+          calculateWorkPatternHoursRegularPeriod: document.getElementById('admCalcHoursRegular').checked,
+          calculateWorkPatternDaysDailyRate: document.getElementById('admCalcDaysDaily').checked,
+          calculateWorkPatternDeviatingDaysHours: document.getElementById('admCalcDeviating').checked,
+        },
+      };
+    }
+
+    async function createAdministration() {
+      const accessToken = val('accessToken');
+      const resultEl = document.getElementById('admResult');
+      const btn = document.getElementById('admBtn');
+
+      if (!accessToken) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML = 'Vul eerst een access token in (linkerpaneel).';
+        return;
+      }
+
+      const employerId = val('employerId');
+      if (!employerId) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML = 'Vul een werkgever ID in (linkerpaneel).';
+        return;
+      }
+
+      if (!val('admName')) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML = 'Vul een naam in voor de administratie.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Bezig met aanmaken...';
+      resultEl.className = 'result';
+      resultEl.style.display = 'none';
+
+      try {
+        const payload = buildAdminPayload();
+        const res = await fetch('/api/create-administration', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ accessToken, employerId, payload }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.status >= 200 && data.status < 300) {
+          let admId = '';
+          // Try to extract admin ID from Location header or response body
+          if (data.location) {
+            const parts = data.location.split('/');
+            admId = parts[parts.length - 1] || parts[parts.length - 2];
+          }
+          if (!admId && data.data && data.data.id) {
+            admId = data.data.id;
+          }
+
+          if (admId) {
+            document.getElementById('adminId').value = admId;
+            document.getElementById('adminDot').classList.add('active');
+            const displayId = admId.length > 12 ? admId.substring(0, 8) + '…' : admId;
+            document.getElementById('adminLabel').textContent = displayId;
+          }
+
+          resultEl.className = 'result success';
+          resultEl.innerHTML =
+            '<strong>&#10003; Administratie succesvol aangemaakt!</strong>' +
+            (admId ? '<br>Administratie ID: <code>' + admId + '</code>' : '') +
+            (data.location ? '<br>Location: <code>' + data.location + '</code>' : '') +
+            '<pre>' + JSON.stringify(data.data, null, 2) + '</pre>';
+          btn.disabled = true;
+          btn.innerHTML = '&#10003; Administratie aangemaakt';
+        } else {
+          resultEl.className = 'result error';
+          resultEl.innerHTML =
+            '<strong>&#10007; Fout (HTTP ' + (data.status || res.status) + ')</strong>' +
+            '<pre>' + JSON.stringify(data.data || data.error || data, null, 2) + '</pre>';
+          btn.disabled = false;
+          btn.innerHTML = 'Administratie aanmaken';
+        }
+      } catch (err) {
+        resultEl.className = 'result error';
+        resultEl.innerHTML =
+          '<strong>&#10007; Netwerkfout</strong><pre>' + err.message + '</pre>';
+        btn.disabled = false;
+        btn.innerHTML = 'Administratie aanmaken';
+      }
+    }
+
+    // Employer ID status indicator
+    document.getElementById('employerId').addEventListener('input', function() {
+      const dot = document.getElementById('employerDot');
+      const label = document.getElementById('employerLabel');
+      if (this.value.trim()) {
+        dot.classList.add('active');
+        const v = this.value.trim();
+        label.textContent = v.length > 12 ? v.substring(0, 8) + '…' : v;
+      } else {
+        dot.classList.remove('active');
+        label.textContent = 'Geen werkgever ID';
+      }
+    });
+
+    // Submit on Enter from company name field
+    document.getElementById('companyName').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submitForm();
+    });
+  </script>
+</body>
+</html>
